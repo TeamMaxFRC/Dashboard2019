@@ -9,7 +9,5 @@
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
     </Window.Background>
-    <Grid>
-        
-    </Grid>
+    <Grid/>
 </Window>
