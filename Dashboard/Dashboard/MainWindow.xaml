@@ -6,9 +6,14 @@
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Background>
+        <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
+    </Window.Background>
+
+        <Grid>
         <local:ErrorReporter/>
         <Label FontSize="25" Content="ERROR" HorizontalAlignment="Left" Margin="34,211,0,193"/>
        
     </Grid>
+    
 </Window>
