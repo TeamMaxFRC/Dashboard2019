@@ -5,9 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Background>
-        <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
-    </Window.Background>
-    <Grid/>
+        Title="Dashboard" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" MaxHeight="64" />
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#004071"/>
+        <Border Grid.Row="1" Grid.ColumnSpan="2">
+            <Border.Background>
+                <ImageBrush ImageSource="Images/background.jpg" Stretch="UniformToFill"/>
+            </Border.Background>
+        </Border>
+    </Grid>
 </Window>
