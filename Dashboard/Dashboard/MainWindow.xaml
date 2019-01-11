@@ -9,5 +9,11 @@
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
     </Window.Background>
-    <Grid/>
+
+        <Grid>
+        <local:ErrorReporter/>
+        <Label FontSize="25" Content="ERROR" HorizontalAlignment="Left" Margin="34,211,0,193"/>
+       
+    </Grid>
+    
 </Window>
