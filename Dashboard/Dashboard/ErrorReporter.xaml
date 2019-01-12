@@ -5,22 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid RenderTransformOrigin="0.496,0.525">
-        <Label FontStyle="Oblique" FontSize="30"  Content="ERROR" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="38,209,0,0" Width="109"/>
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Background="SteelBlue" Margin="0,0,0,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Ellipse Name="Light1" Fill="Tomato" HorizontalAlignment="Left" Height="23" Margin="15,220,0,0" Stroke="Black" VerticalAlignment="Top" Width="23"/>
+        <Button  Name="ErrorButton" Content="Error Button" Margin= "10" Click="ErrorButton_Click" Grid.Row="2"/>
 
-        <Ellipse Name="Light2" Fill="Tomato" HorizontalAlignment="Left" Height="23" Margin="152,220,0,0" Stroke="Black" VerticalAlignment="Top" Width="23"/>
+        <Button Name="ErrorRemoval" Content="Remove Error" Margin="10" Click="ErrorRemoval_Click" Grid.Column="2" Grid.Row="2"/>
 
-        <ListBox Name="ErrorBox" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="183" Margin="10,257,0,0" VerticalAlignment="Top" Width="165"/>
+        <TextBox Name="ErrorTransporter" Text="Error Transporter" Margin="10" Grid.Row="2" Grid.Column="1"/>
 
-        <Button Name="ErrorButton" Content="Error Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="206,394,0,0" Click="ErrorButton_Click"/>
+        <Ellipse Name="Light1" Fill="Tomato" Height="30" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Grid.Column="2"/>
 
-        <TextBox Name="ErrorTransporter" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Error Transporter" VerticalAlignment="Top" Width="176" Margin="206,366,0,0"/>
-        
-        <Button Name="ErrorRemoval" Content="Remove Error" HorizontalAlignment="Left" Margin="307,394,0,0" VerticalAlignment="Top" Width="75" Click="ErrorRemoval_Click"/>
+        <Ellipse Name="Light2" Fill="Tomato" Height="30" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Grid.Column="0" />
 
+        <ListBox Name="ErrorBox" ItemsSource="{Binding}" Margin="10" Grid.Row="1" Grid.ColumnSpan="3"/>
+
+        <TextBlock FontStyle="Oblique" FontSize="30" Text="ERROR" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Center"/>
 
     </Grid>
 </UserControl>

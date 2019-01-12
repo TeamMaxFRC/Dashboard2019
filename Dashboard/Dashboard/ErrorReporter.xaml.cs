@@ -44,6 +44,10 @@ namespace Dashboard
             SelectedItem.Remove((string)ErrorBox.SelectedItem);
         }
 
+        private void ErrorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 }
