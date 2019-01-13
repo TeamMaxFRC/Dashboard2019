@@ -29,6 +29,7 @@
 
         <local:ErrorReporter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
         <local:CurrentMeter Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
+        <local:Console Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 
     </Grid>
 
