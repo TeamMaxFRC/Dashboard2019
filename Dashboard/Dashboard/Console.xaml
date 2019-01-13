@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Dashboard.Console"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dashboard"
+             mc:Ignorable="d" Height="250" Width="300">
+
+    <Grid Background="Coral">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="textBlock" FontSize="32" Margin="10,10,10,0" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0"/>
+        <TextBox x:Name="textBox" Margin="10" Grid.Row="1" TextWrapping="Wrap" Text="kahvuiayhzisuisduisduisdui" IsEnabled="False"/>
+
+    </Grid>
+</UserControl>
