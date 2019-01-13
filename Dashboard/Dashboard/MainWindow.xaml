@@ -10,7 +10,7 @@
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
     </Window.Background>
-<!--<WebBrowser Name="Camera" Source=""-->
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -28,8 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <local:ErrorReporter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
-        
-        <Label FontSize="25" Content="ERROR" HorizontalAlignment="Left" Margin="34,211,0,0"/>
+        <local:CurrentMeter Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
 
     </Grid>
 
