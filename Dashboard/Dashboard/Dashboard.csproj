@@ -62,9 +62,17 @@
     </ApplicationDefinition>
     <Compile Include="Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>
-	  	   <Compile Include="SensorInput.xaml.cs">
+    </Compile>
+    <Compile Include="RobotStates.xaml.cs">
+      <DependentUpon>RobotStates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SensorInput.xaml.cs">
       <DependentUpon>SensorInput.xaml</DependentUpon>
     </Compile>
+    <Page Include="Console.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CurrentMeter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,13 +99,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Console.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="RobotStates.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SensorInput.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
