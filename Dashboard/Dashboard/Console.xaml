@@ -6,17 +6,18 @@
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" Height="250" Width="300">
 
-    <Grid Background="Coral">
+    <Grid Background="Coral" Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="101*"/>
+            <RowDefinition Height="99*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="textBlock" FontSize="32" Margin="10,10,10,190" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-        <TextBox x:Name="textBox" Margin="10,10,10,10" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="kahvuiayhzisuisduisduisdui" IsReadOnly="true"/>
+        <TextBlock x:Name="textBlock" FontSize="32" Margin="10,10,10,91.429" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+        <TextBox x:Name="textBox" Margin="10,10,10,10" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="kahvuiayhzisuisduisduisdui" IsReadOnly="true" Grid.RowSpan="2"/>
 
     </Grid>
 </UserControl>
