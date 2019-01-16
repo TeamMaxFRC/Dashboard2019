@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1200">
 
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
     </Window.Background>
-
     <Grid>
 
         <Grid.RowDefinitions>
@@ -26,9 +25,13 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
         <local:ErrorReporter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
-        <local:CurrentMeter x:Name="CurrentWidget" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
+
+        <local:CurrentMeter Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
+        <local:SensorInput Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"/>
+        <local:Console Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"/>
+
+        <WebBrowser Name="Camera" Source="https://www.nestle-cereals.com/uk/en/products-promotions/brands/cookie-crisp-brand" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>
 
     </Grid>
 

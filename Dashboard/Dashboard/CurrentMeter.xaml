@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="250" d:DesignWidth="300">
 
-    <Grid>
+    <Grid Background="RoyalBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -28,6 +28,5 @@
         <ProgressBar Value="50" Minimum="0" Maximum="100" Name="Motor4" Margin="10" Grid.Column="1" Grid.Row="3"/>
         <ProgressBar Value="50" Minimum="0" Maximum="100" Name="Motor5" Margin="10" Grid.Column="1" Grid.Row="4"/>
         <TextBlock x:Name="textBlock" FontSize="32" Margin="10,0" TextWrapping="Wrap" Text="Current Meters" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"/>
-
     </Grid>
 </UserControl>
