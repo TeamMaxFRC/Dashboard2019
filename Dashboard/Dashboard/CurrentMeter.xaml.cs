@@ -27,9 +27,9 @@ namespace Dashboard
             //Motor1.Value = 0;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        public void SetLeftMotorValue(double MotorValue)
         {
-
+            Motor0.Value = MotorValue;
         }
     }
 }

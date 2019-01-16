@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <local:ErrorReporter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
-        <local:CurrentMeter Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
+        <local:CurrentMeter x:Name="CurrentWidget" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
 
     </Grid>
 
