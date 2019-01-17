@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
-    <Grid Background="ForestGreen" Margin="0,0,0,10">
+    <Grid Background="ForestGreen" Margin="10,10,-9,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
