@@ -31,7 +31,7 @@
         <local:SensorInput Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"/>
         <local:Console Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"/>
 
-        <WebBrowser Name="Camera" Source="https://www.nestle-cereals.com/uk/en/products-promotions/brands/cookie-crisp-brand" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>
+        <WebBrowser Name="Camera" Source="https://boingboing.net/2018/03/21/house-sized-rubber-duck-escape.html" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>
 
     </Grid>
 
