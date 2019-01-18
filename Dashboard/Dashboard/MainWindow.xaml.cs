@@ -1,4 +1,4 @@
-﻿using Rug.Osc;
+﻿using SharpOSC;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -14,15 +14,12 @@ namespace Dashboard
         // Background worker which will receive the OSC data.
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
 
-        // OSC receiver instance.
-        private static OscReceiver Receiver = new OscReceiver(5801);
+        // Create and connect the OSC receiver instance.
+        private static UDPListener Receiver = new UDPListener(5801);
 
         public MainWindow()
         {
             InitializeComponent();
-
-            // Connect the OSC receiver socket to the RIO.
-            Receiver.Connect();
 
             // Link the update method to the background worker.
             UpdateWorker.DoWork += Update;
@@ -35,45 +32,36 @@ namespace Dashboard
         public void Update(object sender, DoWorkEventArgs e)
         {
 
+
+
             // Receive loop from Rug OSC.
-            try
+            while (true)
             {
-
-                while (Receiver.State != OscSocketState.Closed)
+                try
                 {
+                    // Get the next message. This receive will not block.
+                    OscMessage ReceivedMessage = (OscMessage)Receiver.Receive();
 
-                    if (Receiver.State == OscSocketState.Connected)
+                    if (ReceivedMessage == null) continue;
+
+                    // Show any received motor values.
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/Left/Value"))
                     {
-
-                        // Get the next message. This receive will block until data appears.
-                        OscPacket Packet = Receiver.Receive();
-
-                        // Split the string into a path and a value.
-                        string[] OscArray = Packet.ToString().Split(',');
-
-                        string Path = OscArray[0];
-                        string Value = OscArray[1];
-
-                        // Show any received motor values.
-                        if (Path.Equals("/Robot/Motors/Left/Value"))
-                        {
-                            CurrentWidget.SetLeftMotorValue(double.Parse(Value.Remove(Value.Length-1), System.Globalization.NumberStyles.AllowLeadingWhite));
-                        }
-
-                        if (Path.Equals("/Robot/Motors/Right/Value"))
-                        {
-                            // CurrentWidget.SetRightMotorValue(double.Parse(Value.Remove(Value.Length - 1), System.Globalization.NumberStyles.AllowLeadingWhite));
-                        }
-
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
+
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/Right/Value"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+
+                }
+                catch (Exception Ex)
+                {
+                    // Catch any exceptions.
+                    MessageBox.Show(Ex.Message, "OSC Receive Exception", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                 }
             }
-            catch (Exception Ex)
-            {
-                // Catch any exceptions.
-            }
-
-
         }
 
     }
