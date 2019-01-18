@@ -30,6 +30,7 @@
         <local:CurrentMeter x:Name="CurrentWidget" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
         <local:SensorInput Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"/>
         <local:Console Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"/>
+        <local:RobotStates Grid.Row="0" Grid.Column="3" Grid.RowSpan="2"/>
 
         <WebBrowser Name="Camera" Source="https://www.nestle-cereals.com/uk/en/products-promotions/brands/cookie-crisp-brand" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>
 
