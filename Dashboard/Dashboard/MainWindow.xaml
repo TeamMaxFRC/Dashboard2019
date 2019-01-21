@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1200">
+        Title="MainWindow" Height="500" Width="1200" x:Name="MainDashboard" Closing="MainDashboard_Closing">
+    
+   
 
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
@@ -32,7 +34,7 @@
         <local:Console Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"/>
         <local:InitialSensor Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
         <local:RobotStates Grid.Row="0" Grid.Column="3" Grid.RowSpan="2"/>
-        <WebBrowser Name="Camera" Source="https://www.nestle-cereals.com/uk/en/products-promotions/brands/cookie-crisp-brand" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>
+        <!--<WebBrowser Name="Camera" Source="https://www.nestle-cereals.com/uk/en/products-promotions/brands/cookie-crisp-brand" Grid.ColumnSpan="2" Margin="0,0,58.667,9.667" Grid.RowSpan="2"/>-->
 
     </Grid>
 

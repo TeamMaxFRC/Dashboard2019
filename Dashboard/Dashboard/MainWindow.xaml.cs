@@ -14,12 +14,15 @@ namespace Dashboard
         // Background worker which will receive the OSC data.
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
 
-        // Create and connect the OSC receiver instance.
-        private static UDPListener Receiver = new UDPListener(5801);
+        // Create the OSC receiver.
+        private static UDPListener Receiver;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            // Connect the receiver to the proper port.
+            Receiver = new UDPListener(5801);
 
             // Link the update method to the background worker.
             UpdateWorker.DoWork += Update;
@@ -64,6 +67,10 @@ namespace Dashboard
             }
         }
 
+        private void MainDashboard_Closing(object sender, CancelEventArgs e)
+        {
+            Receiver.Close();
+        }
     }
 
 }
