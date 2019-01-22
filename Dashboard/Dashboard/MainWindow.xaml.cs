@@ -54,13 +54,23 @@ namespace Dashboard
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
+                    //if (RecievedMessaage.Address.Equals("Error"))
+                    //Application.ErrorReporter.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
+
+                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    {
+                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                    }
 
                 }
                 catch (Exception Ex)
                 {
                     // Catch any exceptions.
                     MessageBox.Show(Ex.Message, "OSC Receive Exception", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+
                 }
+                
             }
         }
 

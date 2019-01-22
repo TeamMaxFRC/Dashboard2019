@@ -25,8 +25,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <local:ErrorReporter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
-
+        <local:ErrorReporter x:Name="ErrorWidget" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"/>
         <local:CurrentMeter x:Name="CurrentWidget" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2"/>
         <local:SensorInput Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"/>
         <local:Console Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"/>
