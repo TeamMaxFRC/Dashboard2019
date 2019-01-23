@@ -10,19 +10,33 @@ namespace Dashboard
         public CurrentMeter()
         {
             InitializeComponent();
-            //Motor0.Value = 0;
-            //Motor1.Value = 0;
+            Motor0.Value = 0;
+            Motor1.Value = 0;
         }
 
-        public void SetLeftMotorValue(double MotorValue)
+        public void SetLeftMasterMotorValue(double MotorValue0)
         {
-            Motor0.Value = MotorValue;
+            Motor0.Value = MotorValue0;
         }
-
-        public void SetRightMotorValue(double MotorValue)
+        public void SetLeftSlavePrimaryMotorValue(double MotorValue1)
         {
-            Motor1.Value = MotorValue;
+            Motor1.Value = MotorValue1;
         }
-
+        public void SetLeftSlaveSecondaryMotorValue(double MotorValue2)
+        {
+            Motor2.Value = MotorValue2;
+        }
+        public void SetRightMasterMotorValue(double MotorValue13)
+        {
+            Motor13.Value = MotorValue13;
+        }
+        public void SetRightSlavePrimaryMotorValue(double MotorValue14)
+        {
+            Motor14.Value = MotorValue14;
+        }
+        public void SetRightSlaveSecondaryMotorValue(double MotorValue15)
+        {
+            Motor15.Value = MotorValue15;
+        }
     }
 }

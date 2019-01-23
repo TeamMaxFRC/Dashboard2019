@@ -36,7 +36,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <local:ErrorReporter Grid.Row="4" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
+       <local:ErrorReporter Grid.Row="4" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
 
         <local:CurrentMeter x:Name="CurrentWidget" Grid.Row="4" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
         <local:SensorInput Grid.Row="4" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
@@ -44,6 +44,7 @@
         <!--<local:InitialSensor Grid.Column="6" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="2"/>-->
         <!--<local:RobotStates Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"/>-->
         <!--<local:ControllerDiagnostics Grid.Column="5" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4"/>-->
+  
     </Grid>
 
 </Window>

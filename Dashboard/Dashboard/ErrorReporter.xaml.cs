@@ -23,31 +23,44 @@ namespace Dashboard
     public partial class ErrorReporter : UserControl
     {
 
-        ObservableCollection<string> SelectedItem = new ObservableCollection<string>();
+        ObservableCollection<string> ErrorList = new ObservableCollection<string>();
 
         public ErrorReporter()
         {
             InitializeComponent();
-            ErrorBox.ItemsSource = SelectedItem;
+            ErrorBox.ItemsSource = ErrorList;
 
         }
 
         private void ErrorButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedItem.Add(ErrorTransporter.Text);
+            ErrorList.Add(ErrorTransporter.Text);
         }
 
         private void ErrorRemoval_Click(object sender, RoutedEventArgs e)
         {
             //ErrorList.Remove(ErrorTransporter.Text);
-    
-            SelectedItem.Remove((string)ErrorBox.SelectedItem);
+
+            ErrorList.Remove((string)ErrorBox.SelectedItem);
         }
 
-        private void ErrorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void SetError1(String Message, bool Add)
         {
 
+            if (Add)
+            {
+                if (!ErrorList.Contains(Message.Replace("/Robot/Error/", "")))
+                {
+                    ErrorList.Add(Message.Replace("/Robot/Error/", ""));
+                }
+            }
+            else
+            {
+                ErrorList.Remove(Message.Replace("/Robot/Error/", ""));
+            }
+
         }
+
     }
 
 }

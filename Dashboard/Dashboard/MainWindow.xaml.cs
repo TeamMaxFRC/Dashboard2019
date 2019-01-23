@@ -48,14 +48,37 @@ namespace Dashboard
                     if (ReceivedMessage == null) continue;
 
                     // Show any received motor values.
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/Left/Value"))
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
                     {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMotorValue((double)ReceivedMessage.Arguments[0])));
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMasterMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
-
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/Right/Value"))
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlavePrimary/Value"))
                     {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMotorValue((double)ReceivedMessage.Arguments[0])));
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlaveSecondary/Value"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightMaster/Value"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMasterMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlavePrimary/Value"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlaveSecondary/Value"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                    }
+                    //if (RecievedMessaage.Address.Equals("Error"))
+                    //Application.ErrorReporter.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
+
+                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    {
+                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
                     }
 
                 }
@@ -63,7 +86,9 @@ namespace Dashboard
                 {
                     // Catch any exceptions.
                     MessageBox.Show(Ex.Message, "OSC Receive Exception", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+
                 }
+                
             }
         }
 
