@@ -5,8 +5,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="LightSlateGray">
-            
+             d:DesignHeight="250" d:DesignWidth="450">
+    <Grid Background="BlanchedAlmond">
+        <TextBlock Name="Text" Text="Controller Diagnostics" FontSize="40" TextAlignment="Center" Foreground="#e97451" Margin="0,0,0,146"/>
+        <TextBlock Name="Driver" Text="Driver Controls" FontSize="27" TextAlignment="Center" Margin="10,56,257,152" Foreground="#e97451"/>
+        <TextBlock Name="Switches" Text="Switches Controls" FontSize="27" TextAlignment="Center" Foreground="#e97451" Margin="220,56,0,144"/>
+        <Grid Name="LeftStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="110,194,290,6">
+        <Ellipse Name="Ellipse1" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Name="RightStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="10,133,390,67">
+            <Ellipse Name="Ellipse2" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Name="ButtonGrid" Height="51" Width="51" Margin="142,132,257,67">
+            <Border Background="Yellow" Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Name="YButton" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="Y" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="CornflowerBlue" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Name="XButton" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="IndianRed" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="BButton" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="LawnGreen" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Name="AButton" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
