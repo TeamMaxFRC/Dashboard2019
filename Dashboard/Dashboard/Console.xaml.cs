@@ -28,21 +28,19 @@ namespace Dashboard
         }
 
         //
-        public void SetError1(String Message, bool Add)
+        public void PrintLine(String Line)
         {
 
-            //if (Add)
-            //{
-            //    if (!ConsoleBox.Contains(Message.Replace("/Robot/Console/Text", "")))
-            //    {
-            //        ConsoleBox.Add(Message.Replace("/Robot/Console/Text", ""));
-            //    }
-            //}
-            //else
-            //{
-            //    ConsoleBox.Remove(Message.Replace("/Robot/Error/", ""));
-            //}
+            ConsoleBox.Text += "\n" + Line;
 
+        }
+
+        private void test()
+        {
+            PrintLine("Graphing Paper");
+
+            double gyro = 0.75;
+            PrintLine(gyro.ToString());
         }
     }
 }

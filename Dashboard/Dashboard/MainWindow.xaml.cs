@@ -47,6 +47,12 @@ namespace Dashboard
 
                     if (ReceivedMessage == null) continue;
 
+                    // Show the recieved gyro values
+                    if (ReceivedMessage.Address.Equals("/Robot/NavX/Gyro"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((double)ReceivedMessage.Arguments[0]).ToString())));
+                    }
+
                     // Show any received motor values.
                     if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
                     {

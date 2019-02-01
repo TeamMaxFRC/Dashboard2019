@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="textBlock" FontSize="32" Margin="10,10,10,190" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+        <TextBlock x:Name="TitleBox" FontSize="32" Margin="10,10,10,190" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
         <TextBox x:Name="ConsoleBox" Margin="10,10,10,10" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="kahvuiayhzisuisduisduisdui" IsReadOnly="true"/>
 
     </Grid>
