@@ -18,11 +18,31 @@ namespace Dashboard
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
+
+
     public partial class Console : UserControl
     {
         public Console()
         {
             InitializeComponent();
+        }
+
+        //
+        public void SetError1(String Message, bool Add)
+        {
+
+            //if (Add)
+            //{
+            //    if (!ConsoleBox.Contains(Message.Replace("/Robot/Console/Text", "")))
+            //    {
+            //        ConsoleBox.Add(Message.Replace("/Robot/Console/Text", ""));
+            //    }
+            //}
+            //else
+            //{
+            //    ConsoleBox.Remove(Message.Replace("/Robot/Error/", ""));
+            //}
+
         }
     }
 }
