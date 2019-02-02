@@ -1,5 +1,6 @@
 ﻿using SharpOSC;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -8,6 +9,27 @@ namespace Dashboard
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public class ControllerData
+    {
+        public List<double> AxisList { get; set; }
+        public List<bool> ButtonList { get; set; }
+        public bool DPadUp { get; internal set; }
+        public bool DPadDown { get; internal set; }
+        public bool AButton { get; internal set; }
+        public bool BButton { get; internal set; }
+
+        public ControllerData()
+        {
+            AxisList = new List<double>
+            {
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            };
+            ButtonList = new List<bool>
+            {
+                false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+        }
+    }
     public partial class MainWindow : Window
     {
 
@@ -75,11 +97,11 @@ namespace Dashboard
                     //if (RecievedMessaage.Address.Equals("Error"))
                     //Application.ErrorReporter.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
 
-                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
-                    {
-                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
-                    }
+                    //if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    //{
+                    //    bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                    //    Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                    //}
 
                 }
                 catch (Exception Ex)
@@ -96,6 +118,13 @@ namespace Dashboard
         {
             Receiver.Close();
         }
+
+        private void CurrentWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
+    
 
 }
