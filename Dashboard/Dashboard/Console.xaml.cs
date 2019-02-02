@@ -15,17 +15,6 @@ namespace Dashboard
             InitializeComponent();
         }
 
-        //Will connect robot to console widget.
-      
-            public void SetError1(String Message, bool Add)
-            if (Add)
-           {
-               ConsoleBox.Text += Message + "\n";
-         
-           }
-        {
- 
-
         // Prints a line to the console.
         public void PrintLine(String Line)
         {
