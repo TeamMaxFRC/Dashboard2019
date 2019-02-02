@@ -1,5 +1,6 @@
 ﻿using SharpOSC;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -8,6 +9,27 @@ namespace Dashboard
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public class ControllerData
+    {
+        public List<double> AxisList { get; set; }
+        public List<bool> ButtonList { get; set; }
+        public bool DPadUp { get; internal set; }
+        public bool DPadDown { get; internal set; }
+        public bool AButton { get; internal set; }
+        public bool BButton { get; internal set; }
+
+        public ControllerData()
+        {
+            AxisList = new List<double>
+            {
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            };
+            ButtonList = new List<bool>
+            {
+                false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+        }
+    }
     public partial class MainWindow : Window
     {
 
@@ -91,10 +113,16 @@ namespace Dashboard
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
                     }
 
-                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    //if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    //{
+                    //    bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                    //    Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                    //}
+
+                    // Received Controller Values
+                    if (ReceivedMessage.Address.Equals("/Robot/Controller"))
                     {
-                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => ControllerDiagnostics.UpdateButtonData((String)ReceivedMessage.Arguments[0])));
                     }
 
                 }
@@ -112,6 +140,13 @@ namespace Dashboard
         {
             Receiver.Close();
         }
+
+        private void CurrentWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
+    
 
 }

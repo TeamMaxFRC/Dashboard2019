@@ -7,16 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="450">
     <Grid Background="BlanchedAlmond">
-        <TextBlock Name="Text" Text="Controller Diagnostics" FontSize="40" TextAlignment="Center" Foreground="#e97451" Margin="0,0,0,146"/>
-        <TextBlock Name="Driver" Text="Driver Controls" FontSize="27" TextAlignment="Center" Margin="10,56,257,152" Foreground="#e97451"/>
-        <TextBlock Name="Switches" Text="Switches Controls" FontSize="27" TextAlignment="Center" Foreground="#e97451" Margin="220,56,0,144"/>
-        <Grid Name="LeftStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="110,194,290,6">
+        <TextBlock Name="Text" Text="Controller Diagnostics" FontSize="38" TextAlignment="Center" Foreground="#e97451" Margin="0,-6,0,203"/>
+        <TextBlock Name="Driver" Text="Driver Controls" FontSize="20" TextAlignment="Center" Margin="10,41,257,183" Foreground="#e97451"/>
+        <TextBlock Name="Switches" Text="Switches Controls" FontSize="20" TextAlignment="Center" Foreground="#e97451" Margin="220,41,0,176"/>
+        <Grid Name="LeftStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="12,128,388,72">
         <Ellipse Name="Ellipse1" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Name="RightStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="10,133,390,67">
+        <Grid Name="RightStickAxisGrid" Background="Gray"  Height="50" Width="50" Margin="121,190,279,10">
             <Ellipse Name="Ellipse2" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Name="ButtonGrid" Height="51" Width="51" Margin="142,132,257,67">
+        <Grid Name="ButtonGrid" Height="51" Width="51" Margin="142,127,257,72">
             <Border Background="Yellow" Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Button Name="YButton" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
                     <TextBlock Text="Y" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
@@ -38,5 +38,126 @@
                 </Button>
             </Border>
         </Grid>
+        
+        <Grid Name="Dpad" Height="51" Width="51" Margin="45,189,354,10">
+            <Rectangle Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Black"/>
+            <Border Background="Black" Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Name="DPadUp" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Name="DPadLeft" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+ 
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="DPadRight" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Name="DPadDown" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+        </Grid>
+
+        <Grid Name="ViewGrid" Height="18" Width="18" Margin="84,144,348,88">
+            <RadioButton Name="ViewButton" Height="18" Width="18" Background="GhostWhite" BorderBrush="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Border Height="4" Width="6" Background="Black" Margin="4,4,8,10" BorderThickness="1" BorderBrush="Black">
+                <Rectangle Height="3" Width="5" Fill="GhostWhite" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-1.333,-1.333,-0.333,-1"/>
+            </Border>
+            <Border Height="4" Width="6" Background="Black" Margin="5,6,7,8" BorderThickness="1" BorderBrush="Black">
+                <Rectangle Height="3" Width="5" Fill="GhostWhite" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-1.333,-1.333,-0.333,-1"/>
+            </Border>
+        </Grid>
+
+        <Grid Name="MenuGrid" Height="18" Width="18" Margin="113,144,319,88">
+            <RadioButton Name="MenuButton" Height="18" Width="18" Background="GhostWhite" BorderBrush="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,9,7,8"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,7,7,10"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,4,7,13"/>
+        </Grid>
+        <Grid Name="XboxButtonGrid" Height="24" Width="24" Margin="95,120,331,106">
+            <Viewbox Height="24" Width="24">
+                <RadioButton Name="XboxButton" Background="GhostWhite" BorderBrush="Black" BorderThickness="1"/>
+            </Viewbox>
+            <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+        <ProgressBar Name="LeftTrigger" Height="15" Width="70" Margin="12,102,368,133" BorderBrush="Black" BorderThickness="1" />
+        <ProgressBar Name="RightTrigger" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="123,102,257,133"/>
+        <Rectangle Name="LeftBumper" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="22,79,378,156" />
+        <Rectangle Name="RightBumper" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="134,79,266,156"/>
+
+        
+        
+        <Grid Name="LeftStickAxisGrid2" Background="Gray"  Height="50" Width="50" Margin="259,128,141,72">
+            <Ellipse Name="Ellipse3" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Name="RightStickAxisGrid2" Background="Gray"  Height="50" Width="50" Margin="364,189,36,11" >
+            <Ellipse Name="Ellipse4" Height="4" Width="4" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Name="ButtonGrid2" Height="51" Width="51" Margin="389,127,10,72">
+            <Border Background="Yellow" Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Name="YButton2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="Y" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="CornflowerBlue" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Name="XButton2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="IndianRed" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="BButton2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="LawnGreen" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Name="AButton2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+                    <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Button>
+            </Border>
+        </Grid>
+  
+        <Grid Name="Dpad2" Height="51" Width="51" Margin="289,189,110,10">
+            <Rectangle Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Black"/>
+            <Border Background="Black" Height="17" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Name="DPadUp2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Name="DPadLeft2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite">
+
+                </Button>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="DPadRight2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+            <Border Height="17" Width="17" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Name="DPadDown2" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center" Background="GhostWhite"/>
+            </Border>
+        </Grid>
+
+        <Grid Name="ViewGrid2" Height="18" Width="18" Margin="323,144,109,88">
+            <RadioButton Name="ViewButton2" Height="18" Width="18" Background="GhostWhite" BorderBrush="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Border Height="4" Width="6" Background="Black" Margin="4,4,8,10" BorderThickness="1" BorderBrush="Black">
+                <Rectangle Height="3" Width="5" Fill="GhostWhite" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-1.333,-1.333,-0.333,-1"/>
+            </Border>
+            <Border Height="4" Width="6" Background="Black" Margin="5,6,7,8" BorderThickness="1" BorderBrush="Black">
+                <Rectangle Height="3" Width="5" Fill="GhostWhite" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-1.333,-1.333,-0.333,-1"/>
+            </Border>
+        </Grid>
+
+        <Grid Name="MenuGrid2" Height="18" Width="18" Margin="357,144,75,88">
+            <RadioButton Name="MenuButton2" Height="18" Width="18" Background="GhostWhite" BorderBrush="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,9,7,8"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,7,7,10"/>
+            <Rectangle Fill="Black" Height="1" Width="7" Margin="4,4,7,13"/>
+        </Grid>
+        <Grid Name="XboxButtonGrid2" Height="24" Width="24" Margin="335,124,91,102">
+            <Viewbox Height="24" Width="24">
+                <RadioButton Name="XboxButton2" Background="GhostWhite" BorderBrush="Black" BorderThickness="1"/>
+            </Viewbox>
+            <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+        <ProgressBar Name="LeftTrigger2" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="255,102,125,133" />
+        <ProgressBar Name="RightTrigger2" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="370,102,10,133"/>
+        <Rectangle Name="LeftBumper2" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="267,79,133,156"/>
+        <Rectangle Name="RightBumper2" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="382,79,18,156"/>
     </Grid>
 </UserControl>
