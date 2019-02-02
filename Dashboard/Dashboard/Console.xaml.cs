@@ -21,5 +21,7 @@ namespace Dashboard
             ConsoleBox.Text += "\n" + Line;
             ConsoleBox.ScrollToEnd();
         }
+        
     }
 }
+

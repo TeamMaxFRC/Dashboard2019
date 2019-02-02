@@ -86,7 +86,10 @@ namespace Dashboard
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
-                  
+                    if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                    }
 
                     if (ReceivedMessage.Address.Contains("/Robot/Error/"))
                     {
