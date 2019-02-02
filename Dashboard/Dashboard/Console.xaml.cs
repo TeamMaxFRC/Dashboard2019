@@ -27,21 +27,16 @@ namespace Dashboard
             InitializeComponent();
         }
 
-        //
+        //Code that will connect the robot code to the console.
         public void SetError1(String Message, bool Add)
         {
 
-            //if (Add)
-            //{
-            //    if (!ConsoleBox.Contains(Message.Replace("/Robot/Console/Text", "")))
-            //    {
-            //        ConsoleBox.Add(Message.Replace("/Robot/Console/Text", ""));
-            //    }
-            //}
-            //else
-            //{
-            //    ConsoleBox.Remove(Message.Replace("/Robot/Error/", ""));
-            //}
+           if (Add)
+           {
+               ConsoleBox.Text += Message + "\n";
+         
+           }
+            
 
         }
     }

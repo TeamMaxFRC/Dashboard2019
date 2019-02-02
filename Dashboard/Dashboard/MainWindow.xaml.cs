@@ -72,9 +72,13 @@ namespace Dashboard
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
-                   // Connects error application to main window.
-                   //if (RecievedMessaage.Address.Equals("Error"))
-                   // Application.ErrorReporter.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
+                    if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.SetError1((String)ReceivedMessage.Arguments[0], true)));
+                    }
+                    // Connects error application to main window.
+                   //if (RecievedMessage.Address.Equals("Error"))
+                   //Application.ErrorList.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
 
                     if (ReceivedMessage.Address.Contains("/Robot/Error/"))
                     {

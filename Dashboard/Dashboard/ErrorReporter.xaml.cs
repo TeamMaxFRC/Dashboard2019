@@ -32,7 +32,7 @@ namespace Dashboard
 
         }
 
-        private void ErrorButton_Click(object sender, RoutedEventArgs e)
+        /*private void ErrorButton_Click(object sender, RoutedEventArgs e)
         {
             ErrorList.Add(ErrorTransporter.Text);
         }
@@ -42,7 +42,7 @@ namespace Dashboard
             //ErrorList.Remove(ErrorTransporter.Text);
 
             ErrorList.Remove((string)ErrorBox.SelectedItem);
-        }
+        }*/
 
         public void SetError1(String Message, bool Add)
         {

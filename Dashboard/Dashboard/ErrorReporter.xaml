@@ -18,12 +18,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button  Name="ErrorButton" Content="Error Button" Margin= "10" Click="ErrorButton_Click" Grid.Row="2"/>
-
-        <Button Name="ErrorRemoval" Content="Remove Error" Margin="10" Click="ErrorRemoval_Click" Grid.Column="2" Grid.Row="2"/>
-
-        <TextBox Name="ErrorTransporter" Text="Error Transporter" Margin="10" Grid.Row="2" Grid.Column="1"/>
-
         <Ellipse Name="Light1" Fill="Tomato" Height="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Grid.Column="2"/>
 
         <Ellipse Name="Light2" Fill="Tomato" Height="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Grid.Column="0" />
