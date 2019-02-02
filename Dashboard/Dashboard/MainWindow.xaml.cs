@@ -54,7 +54,7 @@ namespace Dashboard
                         // Print the gyro value every 100 loops.
                         if (PrintTimer % 100 == 0)
                         {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
+                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
                         }
 
                         // Increment the print timer.
