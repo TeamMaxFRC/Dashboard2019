@@ -86,9 +86,7 @@ namespace Dashboard
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
                     }
-                    // Connects error application to main window.
-                    //if (RecievedMessaage.Address.Equals("Error"))
-                    // Application.ErrorReporter.Dispatcher.InvokeAsync(new Action(() => ErrorReporter.SendError((double)Arguments[0])));
+                  
 
                     if (ReceivedMessage.Address.Contains("/Robot/Error/"))
                     {

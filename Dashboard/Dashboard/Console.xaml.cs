@@ -15,11 +15,16 @@ namespace Dashboard
             InitializeComponent();
         }
 
-        // Event handler for the clear button click.
-        private void ConsoleClear_Click(object sender, RoutedEventArgs e)
+        //Will connect robot to console widget.
+      
+            public void SetError1(String Message, bool Add)
+            if (Add)
+           {
+               ConsoleBox.Text += Message + "\n";
+         
+           }
         {
-            ConsoleBox.Clear();
-        }
+ 
 
         // Prints a line to the console.
         public void PrintLine(String Line)
