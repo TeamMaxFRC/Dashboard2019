@@ -66,6 +66,9 @@
     <Compile Include="ControllerDiagnostics.xaml.cs">
       <DependentUpon>ControllerDiagnostics.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LimeLight.xaml.cs">
+      <DependentUpon>LimeLight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InitialSensor.xaml.cs">
       <DependentUpon>InitialSensor.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,9 @@
     <Compile Include="SensorInput.xaml.cs">
       <DependentUpon>SensorInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Speedometer.xaml.cs">
+      <DependentUpon>Speedometer.xaml</DependentUpon>
+    </Compile>
     <Page Include="Console.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,6 +88,10 @@
     <Page Include="ControllerDiagnostics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LimeLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CurrentMeter.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +130,10 @@
     <Page Include="SensorInput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Speedometer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

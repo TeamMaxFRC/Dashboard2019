@@ -5,8 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="LightSlateGray">
-        <TextBlock Foreground="BlanchedAlmond" FontSize="75" Text="Sensor Input" Margin="184,0,186,227"/>
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Background="Maroon">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Foreground="Tomato" Text="Sensor Input" FontSize="36" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Rectangle Fill="#FFF4F4F5" Height="155" Stroke="Black" Width="10" RenderTransformOrigin="0.5,0" Margin="386,274,381,21">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Ellipse Fill="Black" HorizontalAlignment="Left" Height="30" Margin="388,245,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
     </Grid>
 </UserControl>
