@@ -11,5 +11,10 @@ namespace Dashboard
         {
             InitializeComponent();
         }
+
+        //if (*button pressed*)
+        //{ 
+        //    TextBox.Text += "\n 'A' button pressed";
+        //}
     }
 }

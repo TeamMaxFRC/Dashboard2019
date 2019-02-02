@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
     <Grid>
-        <Button x:Name="button" Content="meme" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="A" HorizontalAlignment="Left" Margin="112,117,0,0" TextWrapping="Wrap" Text="A" VerticalAlignment="Top" Background="GreenYellow"/>
     </Grid>
 </UserControl>
