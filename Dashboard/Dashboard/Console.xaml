@@ -16,7 +16,8 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock x:Name="TitleBox" FontSize="32" Margin="10,10,10,190" TextWrapping="Wrap" Text="Console" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-        <TextBox x:Name="ConsoleBox" Margin="10,10,10,10" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="kahvuiayhzisuisduisduisdui" IsReadOnly="true"/>
+        <TextBox x:Name="ConsoleBox" Margin="10,10,10,34" Grid.Column="0" Grid.Row="1" Text="kahvuiayhzisuisduisduisdui"/>
+        <Button x:Name="ConsoleClear" Content="Clear Console" HorizontalAlignment="Center" Margin="10,171,10,0" Grid.Row="1" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
