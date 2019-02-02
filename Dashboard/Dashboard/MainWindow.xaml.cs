@@ -97,6 +97,12 @@ namespace Dashboard
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
                     }
 
+                    // Received Controller Values
+                    if (ReceivedMessage.Address.Equals("/Robot/Controller"))
+                    {
+                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => ControllerDiagnostics.UpdateButtonData((String)ReceivedMessage.Arguments[0])));
+                    }
+
                 }
                 catch (Exception Ex)
                 {

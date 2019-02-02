@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
+
 namespace Dashboard
 {
     /// <summary>
@@ -21,7 +22,16 @@ namespace Dashboard
             ConsoleBox.Text += "\n" + Line;
             ConsoleBox.ScrollToEnd();
         }
-        
+
+        private void ConsoleBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+         
+        private void ConsoleClear_Click(object sender, RoutedEventArgs e)
+        {
+            ConsoleBox.Text = String.Empty;
+
+        }
     }
 }
-
