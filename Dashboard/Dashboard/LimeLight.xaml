@@ -7,14 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="250" d:DesignWidth="300">
 
-    <Grid Background="RoyalBlue">
+    <Grid x:Name="MainGrid" Background="RoyalBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <WebBrowser x:Name="LimeLightWebView" Grid.Row="0" Grid.Column="0" Margin="5" Source="http://limelight.local:5801"/>
+        <Label x:Name="Debug" Grid.Column="1" Grid.Row="1" Margin="5"/>
+
     </Grid>
 
 </UserControl>

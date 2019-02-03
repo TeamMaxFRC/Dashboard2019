@@ -65,7 +65,7 @@ namespace Dashboard
             InitializeComponent();
 
             // Connect the receiver to the proper port.
-            Receiver = new UDPListener(5801);
+            Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
             UpdateWorker.DoWork += Update;
@@ -132,6 +132,11 @@ namespace Dashboard
                     if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Contains("/Robot/Motors/"))
+                    {
+                        string[] SplitAddress = ReceivedMessage.Address.Split('/');
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.SetDataInDataGrid(SplitAddress[3], SplitAddress[4], (double)ReceivedMessage.Arguments[0])));
                     }
 
                     //if (ReceivedMessage.Address.Contains("/Robot/Error/"))
