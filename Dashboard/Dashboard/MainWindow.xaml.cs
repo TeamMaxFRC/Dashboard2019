@@ -145,7 +145,11 @@ namespace Dashboard
         {
 
         }
-        
+
+        private void ConsoleBox_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     
 
