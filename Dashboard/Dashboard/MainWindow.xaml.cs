@@ -112,6 +112,11 @@ namespace Dashboard
                     {
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
                     }
+                    if (ReceivedMessage.Address.Contains("/Robot/Motors/"))
+                    {
+                        string[] SplitAddress = ReceivedMessage.Address.Split('/');
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.SetDataInDataGrid(SplitAddress[3], SplitAddress[4], (double)ReceivedMessage.Arguments[0])));
+                    }
 
                     //if (ReceivedMessage.Address.Contains("/Robot/Error/"))
                     //{
