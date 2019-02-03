@@ -66,10 +66,9 @@
     <Compile Include="ControllerDiagnostics.xaml.cs">
       <DependentUpon>ControllerDiagnostics.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LimeLight.xaml.cs">
-      <DependentUpon>LimeLight.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="InitialSensor.xaml.cs">
+   
+   
+   <Compile Include="InitialSensor.xaml.cs">
       <DependentUpon>InitialSensor.xaml</DependentUpon>
     </Compile>
     <Compile Include="RobotStates.xaml.cs">
@@ -98,10 +97,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ErrorReporter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InitialSensor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
