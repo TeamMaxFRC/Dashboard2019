@@ -22,7 +22,7 @@ namespace Dashboard
             InitializeComponent();
 
             // Connect the receiver to the proper port.
-            Receiver = new UDPListener(5801);
+            Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
             UpdateWorker.DoWork += Update;

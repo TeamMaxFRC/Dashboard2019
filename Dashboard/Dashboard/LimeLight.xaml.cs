@@ -10,8 +10,19 @@ namespace Dashboard
         public LimeLight()
         {
             InitializeComponent();
-
         }
 
+        public void RefreshPage()
+        {
+            bool test = LimeLightWebView.IsLoaded;
+            if (test)
+            {
+                Debug.Content = "Loaded!";
+            }
+            else
+            {
+                Debug.Content = "Nope!";
+            }
+        }
     }
 }
