@@ -69,9 +69,6 @@
     <Compile Include="LimeLight.xaml.cs">
       <DependentUpon>LimeLight.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InitialSensor.xaml.cs">
-      <DependentUpon>InitialSensor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="RobotStates.xaml.cs">
       <DependentUpon>RobotStates.xaml</DependentUpon>
     </Compile>
