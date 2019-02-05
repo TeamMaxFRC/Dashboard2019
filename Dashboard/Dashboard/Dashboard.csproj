@@ -72,8 +72,8 @@
     <Compile Include="ControllerDiagnostics.xaml.cs">
       <DependentUpon>ControllerDiagnostics.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LimeLight.xaml.cs">
-      <DependentUpon>LimeLight.xaml</DependentUpon>
+    <Compile Include="Limelight.xaml.cs">
+      <DependentUpon>Limelight.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logger.xaml.cs">
       <DependentUpon>Logger.xaml</DependentUpon>
@@ -95,15 +95,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LimeLight.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="CurrentMeter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ErrorReporter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Limelight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LimeLightLogo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
