@@ -72,6 +72,9 @@
     <Compile Include="ControllerDiagnostics.xaml.cs">
       <DependentUpon>ControllerDiagnostics.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LimeLight.xaml.cs">
+      <DependentUpon>LimeLight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logger.xaml.cs">
       <DependentUpon>Logger.xaml</DependentUpon>
     </Compile>
