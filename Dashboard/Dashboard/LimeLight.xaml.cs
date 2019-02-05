@@ -18,7 +18,7 @@ namespace Dashboard
     /// <summary>
     /// Interaction logic for Limelight.xaml
     /// </summary>
-    public partial class Limelight : Page
+    public partial class Limelight : UserControl
     {
         public Limelight()
         {
