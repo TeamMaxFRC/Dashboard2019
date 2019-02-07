@@ -17,6 +17,7 @@ namespace Dashboard
         public double MotorCurrent { get; set; }
         public double MotorVoltage { get; set; }
         public double MotorRPM { get; set; }
+        public double MotorPosition { get; set; }
     }
 
     /// <summary>
@@ -105,11 +106,16 @@ namespace Dashboard
             // Initialize CSV stream writer and CSV file writer with current date and time
             CSVStreamWriter = new StreamWriter("C:\\Users\\Public\\Documents\\log_" + DateTime.Now.Month + DateTime.Now.Day + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".csv");
             CSVFileWriter = new CsvWriter(CSVStreamWriter, true);
+            StartButton.IsEnabled = false;
+            StopButton.IsEnabled = true;
         }
 
         private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             LoggingActive = false;
+
+            StartButton.IsEnabled = true;
+            StopButton.IsEnabled = false;
 
             // Close CSV stream writer
             CSVStreamWriter.Close();
@@ -132,8 +138,12 @@ namespace Dashboard
                             Motor.MotorVoltage = Value;
                             break;
 
-                        case "RPM":
+                        case "EncoderVelocity":
                             Motor.MotorRPM = Value;
+                            break;
+
+                        case "EncoderPosition":
+                            Motor.MotorPosition = Value;
                             break;
 
                         default:
@@ -142,6 +152,10 @@ namespace Dashboard
                     }
                 }
             }
+
+            // Refresh the logger's datagrid.
+            LoggerDataGrid.Items.Refresh();
+
         }
 
         public void LogDataFromDataGrid(object sender, DoWorkEventArgs e)
