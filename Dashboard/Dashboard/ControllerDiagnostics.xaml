@@ -79,8 +79,8 @@
             </Viewbox>
             <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
         </Grid>
-        <ProgressBar Name="LeftTrigger" Height="15" Width="70" Margin="12,102,368,133" BorderBrush="Black" BorderThickness="1" />
-        <ProgressBar Name="RightTrigger" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="123,102,257,133"/>
+        <ProgressBar Name="LeftTrigger" Maximum="100" Minimum="0" Value="50" Height="15" Width="70" Margin="12,102,368,133" BorderBrush="Black" BorderThickness="1" />
+        <ProgressBar Name="RightTrigger" Maximum="100" Minimum="0" Value="50" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="123,102,257,133"/>
         <Rectangle Name="LeftBumper" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="22,79,378,156" />
         <Rectangle Name="RightBumper" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="134,79,266,156"/>
 
@@ -155,8 +155,8 @@
             </Viewbox>
             <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
         </Grid>
-        <ProgressBar Name="LeftTrigger2" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="255,102,125,133" />
-        <ProgressBar Name="RightTrigger2" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="370,102,10,133"/>
+        <ProgressBar Name="LeftTrigger2" Maximum="100" Minimum="0" Value="50" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="255,102,125,133" />
+        <ProgressBar Name="RightTrigger2" Maximum="100" Minimum="0" Value="50" Height="15" Width="70" BorderBrush="Black" BorderThickness="1" Margin="370,102,10,133"/>
         <Rectangle Name="LeftBumper2" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="267,79,133,156"/>
         <Rectangle Name="RightBumper2" Height="15" Width="50" Fill="LightGray" RadiusX="3" RadiusY="3" Stroke="Black" Margin="382,79,18,156"/>
     </Grid>

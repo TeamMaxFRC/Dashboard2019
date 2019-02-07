@@ -235,6 +235,10 @@ namespace Dashboard
             {
                 RightBumper2.Fill = Brushes.GhostWhite;
             }
+        }
+
+        public void SetLeftTrigger1(double axis)
+        {
 
         }
     }
