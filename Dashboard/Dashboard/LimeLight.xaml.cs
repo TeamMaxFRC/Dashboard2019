@@ -24,5 +24,20 @@ namespace Dashboard
         {
             InitializeComponent();
         }
+
+        public void UpdateX(double X)
+        {
+            xDisplay.Text = "X: " + X.ToString();
+        }
+
+        public void UpdateY(double Y)
+        {
+            yDisplay.Text = "Y: " + Y.ToString();
+        }
+
+        public void UpdateA(double A)
+        {
+            aDisplay.Text = "A: " + A.ToString();
+        }
     }
 }

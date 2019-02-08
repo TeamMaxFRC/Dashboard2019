@@ -103,6 +103,19 @@ namespace Dashboard
                         // Increment the print timer.
                         PrintTimer++;
                     }
+                    // Show any recieved Limelight values.
+                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/Y"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
+                    }
+                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/A"))
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
+                    }
 
                     // Show any received motor values.
                     if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
