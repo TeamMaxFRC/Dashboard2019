@@ -79,6 +79,7 @@ namespace Dashboard
         {
             // Time before another console print occurs.
             int PrintTimer = 0;
+            LimelightWidget.InitStream();
 
             // Receive loop from Rug OSC.
             while (true)

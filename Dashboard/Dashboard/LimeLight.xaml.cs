@@ -20,6 +20,10 @@ namespace Dashboard
             _mjpeg = new MjpegDecoder();
             _mjpeg.FrameReady += mjpeg_FrameReady;
             _mjpeg.Error += _mjpeg_Error;
+        }
+
+        public void InitStream()
+        {
             _mjpeg.ParseStream(new Uri("http://limelight.local:5800"));
         }
 
@@ -30,7 +34,8 @@ namespace Dashboard
 
         void _mjpeg_Error(object sender, ErrorEventArgs e)
         {
-            MessageBox.Show(e.Message);
+            _mjpeg.StopStream();
+            _mjpeg.ParseStream(new Uri("http://limelight.local:5800"));
         }
 
         public void UpdateX(double X)
