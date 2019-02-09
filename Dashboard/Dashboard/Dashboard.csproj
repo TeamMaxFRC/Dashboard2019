@@ -38,6 +38,10 @@
     <Reference Include="CsvHelper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.12.1.2\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="MjpegProcessor, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MjpegProcessor.dll</HintPath>
+    </Reference>
     <Reference Include="SharpOSC">
       <HintPath>SharpOSC\SharpOSC.dll</HintPath>
     </Reference>
