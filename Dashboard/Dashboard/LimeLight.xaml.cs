@@ -13,7 +13,7 @@ namespace Dashboard
     public partial class Limelight : UserControl
     {
         readonly MjpegDecoder _mjpeg;
-
+        Uri StreamAddress = new Uri("http://limelight.local:5800");
         public Limelight()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace Dashboard
 
         public void InitStream()
         {
-            _mjpeg.ParseStream(new Uri("http://limelight.local:5800"));
+            _mjpeg.ParseStream(StreamAddress);
         }
 
         private void mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
@@ -35,7 +35,7 @@ namespace Dashboard
         void _mjpeg_Error(object sender, ErrorEventArgs e)
         {
             _mjpeg.StopStream();
-            _mjpeg.ParseStream(new Uri("http://limelight.local:5800"));
+            _mjpeg.ParseStream(StreamAddress);
         }
 
         public void UpdateX(double X)

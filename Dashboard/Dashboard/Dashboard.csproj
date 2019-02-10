@@ -179,5 +179,8 @@
   <ItemGroup>
     <Resource Include="Images\LimeLightLogo.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Max.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
