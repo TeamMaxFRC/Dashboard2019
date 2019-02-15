@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="300">
-    <Grid Background="LightSeaGreen">
+             d:DesignHeight="250" d:DesignWidth="250">
+    <Grid Background="LightSeaGreen" Margin="0,0,0,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -19,28 +19,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Foreground="Black" Text="Sensor Input" FontSize="32" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique"/>
-        <Grid Name="GridEncoder" Background="AntiqueWhite" HorizontalAlignment="Left" Grid.RowSpan="4" Width="280" Margin="10,0,0,10" Grid.ColumnSpan="2" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
+        <!-- Title Label -->
+        <TextBlock Foreground="Black" Text="Sensor Input" FontSize="20" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique"/>
+
+
+        <DataGrid Name="SensorInputGrid" ItemsSource="{Binding}" Margin="10,10,10,10" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" AutoGeneratingColumn="SensorInputGrid_AutoGeneratingColumn" CanUserAddRows="False" HeadersVisibility="Column"/>
+        
     </Grid>
 </UserControl>

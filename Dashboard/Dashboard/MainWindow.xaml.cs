@@ -79,7 +79,7 @@ namespace Dashboard
         {
             // Time before another console print occurs.
             int PrintTimer = 0;
-            LimelightWidget.InitStream();
+            //LimelightWidget.InitStream();
 
             // Receive loop from Rug OSC.
             while (true)
@@ -107,15 +107,15 @@ namespace Dashboard
                     // Show any recieved Limelight values.
                     if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
                     {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
+                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
                     }
                     if (ReceivedMessage.Address.Equals("/Robot/Limelight/Y"))
                     {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
+                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
                     }
                     if (ReceivedMessage.Address.Equals("/Robot/Limelight/A"))
                     {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
+                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
                     }
 
                     // Show any received motor values.
