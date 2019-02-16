@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 
 namespace Dashboard
@@ -90,7 +91,11 @@ namespace Dashboard
 
                     // Receive the packet, but skip if it's null.
                     OscPacket Packet = Receiver.Receive();
-                    if (Packet == null) continue;
+                    if (Packet == null)
+                    {
+                        Thread.Sleep(1);
+                        continue;
+                    }
 
                     if (Packet.GetType().Name == "OscMessage")
                     {

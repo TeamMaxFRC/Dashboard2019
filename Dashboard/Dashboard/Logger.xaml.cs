@@ -34,8 +34,8 @@ namespace Dashboard
             InitializeComponent();
 
             // Start the stale log thread.
-            StaleLogChecker.DoWork += RemoveStaleLogs;
-            StaleLogChecker.RunWorkerAsync();
+            // StaleLogChecker.DoWork += RemoveStaleLogs;
+            // StaleLogChecker.RunWorkerAsync();
         }
 
         // Log the data provided.
