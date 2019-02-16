@@ -51,6 +51,7 @@ namespace Dashboard
             };
         }
     }
+
     public partial class MainWindow : Window
     {
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
 
@@ -12,11 +13,14 @@ namespace Dashboard
     public partial class Logger : UserControl
     {
 
+        private BackgroundWorker StaleLogChecker = new BackgroundWorker();
+
         // Log tracking class.
         public class Log
         {
             public string BundleIdentifier { get; set; }
             public string ActiveFileName { get; set; }
+            public DateTime LastTimeLogged { get; set; }
         }
 
         // List of log files open.
@@ -26,6 +30,10 @@ namespace Dashboard
         public Logger()
         {
             InitializeComponent();
+
+            // Start the stale log thread.
+            StaleLogChecker.DoWork += RemoveStaleLogs;
+            StaleLogChecker.RunWorkerAsync();
         }
 
         // Log the data provided.
@@ -47,6 +55,7 @@ namespace Dashboard
                 if (LogFile.BundleIdentifier == BundleIdentifier)
                 {
                     FileName = LogFile.ActiveFileName;
+                    LogFile.LastTimeLogged = DateTime.Now;
                     InitializeFile = false;
                     break;
                 }
@@ -57,7 +66,7 @@ namespace Dashboard
             {
 
                 // Create the new log file and add it to the active files.
-                Log NewLogFile = new Log() { BundleIdentifier = BundleIdentifier, ActiveFileName = BundleIdentifier + "-" + DateTime.Now.ToString("hh-mm-ss") };
+                Log NewLogFile = new Log() { BundleIdentifier = BundleIdentifier, ActiveFileName = BundleIdentifier + "-" + DateTime.Now.ToString("hh-mm-ss"), LastTimeLogged = DateTime.Now };
                 ActiveLogs.Add(NewLogFile);
 
                 // Store the new file name.
@@ -70,6 +79,7 @@ namespace Dashboard
                 HeaderWriter.WriteLine(HeaderLine);
                 HeaderWriter.Flush();
                 HeaderWriter.Close();
+                                
             }
 
             // Create the stream writer for the CSV file.
@@ -79,6 +89,21 @@ namespace Dashboard
             DataWriter.WriteLine(DataLine);
             DataWriter.Flush();
             DataWriter.Close();
+
+        }
+
+        // Removes any logs that haven't been updated for 5 seconds.
+        public void RemoveStaleLogs(object sender, DoWorkEventArgs e)
+        {
+
+            // Check if any of the logs should be closed.
+            foreach (Log LogFile in ActiveLogs)
+            {
+                if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
+                {
+                    ActiveLogs.Remove(LogFile);
+                }
+            }
 
         }
 
