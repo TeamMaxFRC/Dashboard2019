@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Dashboard
@@ -37,6 +39,7 @@ namespace Dashboard
         }
 
         // Log the data provided.
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void LogData(string BundleIdentifier, string HeaderLine, string DataLine)
         {
 
@@ -93,16 +96,33 @@ namespace Dashboard
         }
 
         // Removes any logs that haven't been updated for 5 seconds.
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveStaleLogs(object sender, DoWorkEventArgs e)
         {
 
-            // Check if any of the logs should be closed.
-            foreach (Log LogFile in ActiveLogs)
+            while (true)
             {
-                if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
+
+                // Record the start time.
+                DateTime StartTime = DateTime.Now;
+
+                // Check if any of the logs should be closed.
+                foreach (Log LogFile in ActiveLogs)
                 {
-                    ActiveLogs.Remove(LogFile);
+                    if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
+                    {
+                        ActiveLogs.Remove(LogFile);
+                        break;
+                    }
                 }
+
+                // Record the stop time.
+                DateTime StopTime = DateTime.Now;
+
+                // Sleep the background worker for 1 second
+                TimeSpan PassedTime = StopTime - StartTime;
+                Task.Delay(1000 - (int)PassedTime.TotalMilliseconds);
+
             }
 
         }
