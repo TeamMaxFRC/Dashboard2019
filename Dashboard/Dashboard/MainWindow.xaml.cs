@@ -51,6 +51,7 @@ namespace Dashboard
             };
         }
     }
+
     public partial class MainWindow : Window
     {
 
@@ -87,89 +88,119 @@ namespace Dashboard
                 try
                 {
 
-                    // Get the next message. This receive will not block.
-                    OscMessage ReceivedMessage = (OscMessage)Receiver.Receive();
+                    // Receive the packet, but skip if it's null.
+                    OscPacket Packet = Receiver.Receive();
+                    if (Packet == null) continue;
 
-                    if (ReceivedMessage == null) continue;
-
-                    // Show the recieved gyro values
-                    if (ReceivedMessage.Address.Equals("/Robot/NavX/Gyro"))
+                    if (Packet.GetType().Name == "OscMessage")
                     {
-                        // Print the gyro value every 100 loops.
-                        if (PrintTimer % 100 == 0)
+
+                        // Get the next message. This receive will not block.
+                        OscMessage ReceivedMessage = (OscMessage)Packet;
+
+                        // Show the recieved gyro values
+                        if (ReceivedMessage.Address.Equals("/Robot/NavX/Gyro"))
                         {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
+                            // Print the gyro value every 100 loops.
+                            if (PrintTimer % 100 == 0)
+                            {
+                                Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
+                            }
+
+                            // Increment the print timer.
+                            PrintTimer++;
+                        }
+                        // Show any recieved Limelight values.
+                        if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
+                        {
+                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Limelight/Y"))
+                        {
+                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Limelight/A"))
+                        {
+                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
                         }
 
-                        // Increment the print timer.
-                        PrintTimer++;
-                    }
-                    // Show any recieved Limelight values.
-                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
-                    {
-                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/Y"))
-                    {
-                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Limelight/A"))
-                    {
-                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
-                    }
+                        // Show any received motor values.
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMasterMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlavePrimary/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlaveSecondary/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightMaster/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMasterMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlavePrimary/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlaveSecondary/Value"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
+                        }
+                        if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
+                        {
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                        }
 
-                    // Show any received motor values.
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMasterMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlavePrimary/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlaveSecondary/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightMaster/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMasterMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlavePrimary/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlaveSecondary/Value"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
-                    {
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
-                    }
-                    if (ReceivedMessage.Address.Contains("/Robot/Motors/"))
-                    {
-                        string[] SplitAddress = ReceivedMessage.Address.Split('/');
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.SetDataInDataGrid(SplitAddress[3], SplitAddress[4], (double)ReceivedMessage.Arguments[0])));
-                    }
+                        if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                        {
+                            bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                        }
 
-                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
-                    {
-                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                        // Received Controller Values
+                        if (ReceivedMessage.Address.Equals("/Robot/Controller"))
+                        {
+                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => ControllerDiagnostics.UpdateButtonData((String)ReceivedMessage.Arguments[0])));
+                        }
                     }
-
-                    // Received Controller Values
-                    if (ReceivedMessage.Address.Equals("/Robot/Controller"))
+                    else
                     {
-                        //Application.Current.Dispatcher.InvokeAsync(new Action(() => ControllerDiagnostics.UpdateButtonData((String)ReceivedMessage.Arguments[0])));
+
+                        // The packet is actually a bundle, and should be logged.
+                        OscBundle Bundle = (OscBundle)Packet;
+
+                        // Create the relevant data for the CSV file.
+                        string BundleIdentifier = "";
+                        string HeaderLine = "";
+                        string DataLine = "";
+
+                        // Iterate through all the messages and generate the header and data rows.
+                        foreach (OscMessage Message in Bundle.Messages)
+                        {
+
+                            if (Message.Address.Equals("/BundleIdentifier"))
+                            {
+                                BundleIdentifier = (string)Message.Arguments[0];
+                                continue;
+                            }
+
+                            HeaderLine += Message.Address + ",";
+                            DataLine += ((double)Message.Arguments[0]).ToString() + ",";
+
+                        }
+
+                        // Call the log data function.
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.LogData(BundleIdentifier, HeaderLine, DataLine)));
                     }
 
                 }
                 catch (Exception Ex)
                 {
                     // Catch any exceptions.
-                    MessageBox.Show(Ex.Message, "OSC Receive Exception", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                    MessageBox.Show(Ex.Message + Ex.StackTrace, "OSC Receive Exception", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
 
                 }
 
@@ -190,7 +221,7 @@ namespace Dashboard
         {
 
         }
+
     }
-    
 
 }

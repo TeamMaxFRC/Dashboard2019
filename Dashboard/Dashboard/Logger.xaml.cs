@@ -1,24 +1,11 @@
-﻿using CsvHelper;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Windows.Controls;
 
 namespace Dashboard
 {
-
-    // Class for each motor in the logger.
-    public class MotorEntry
-    {
-        public string MotorName { get; set; }
-        public bool LogInfo { get; set; }
-        public double MotorCurrent { get; set; }
-        public double MotorVoltage { get; set; }
-        public double MotorRPM { get; set; }
-        public double MotorPosition { get; set; }
-    }
 
     /// <summary>
     /// Interaction logic for Logger.xaml
@@ -26,159 +13,100 @@ namespace Dashboard
     public partial class Logger : UserControl
     {
 
-        // Collection of motor entries for the data grid.
-        ObservableCollection<MotorEntry> MotorEntries = new ObservableCollection<MotorEntry>();
+        private BackgroundWorker StaleLogChecker = new BackgroundWorker();
 
-        // Variable to track the logging state.
-        private bool LoggingActive = false;
+        // Log tracking class.
+        public class Log
+        {
+            public string BundleIdentifier { get; set; }
+            public string ActiveFileName { get; set; }
+            public DateTime LastTimeLogged { get; set; }
+        }
 
-        // Background worker which will save the data to the CSV file
-        private BackgroundWorker UpdateCSV = new BackgroundWorker();
-
-        // Writer to write to CSV file
-        StreamWriter CSVStreamWriter;
-        CsvWriter CSVFileWriter;
-
+        // List of log files open.
+        List<Log> ActiveLogs = new List<Log>();
+        
+        // Constructor for the logging widget.
         public Logger()
         {
             InitializeComponent();
 
-            // Binding the data grid to the motor entries list.
-            LoggerDataGrid.ItemsSource = MotorEntries;
-
-            MotorEntries.Add(new MotorEntry() { MotorName = "liftMaster", LogInfo = true });
-            MotorEntries.Add(new MotorEntry() { MotorName = "liftSlavePrimary", LogInfo = true });
-            MotorEntries.Add(new MotorEntry() { MotorName = "liftSlaveSecondary", LogInfo = true });
-            MotorEntries.Add(new MotorEntry() { MotorName = "liftSlaveTertiary", LogInfo = true });
-
-            // Link the log data method to the background worker
-            UpdateCSV.DoWork += LogDataFromDataGrid;
-
-            // Have the update csv run in its own thread
-            UpdateCSV.RunWorkerAsync();
-
+            // Start the stale log thread.
+            StaleLogChecker.DoWork += RemoveStaleLogs;
+            StaleLogChecker.RunWorkerAsync();
         }
 
-        private void LoggerDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        // Log the data provided.
+        public void LogData(string BundleIdentifier, string HeaderLine, string DataLine)
         {
 
-            // Change some column information based on the column type.
-            switch (e.Column.Header)
+            // Create the specific directory if it doesn't exist.
+            System.IO.Directory.CreateDirectory("C:/Max Dashboard Log Files/");
+
+            // Boolean to check if the file must be initialized.
+            bool InitializeFile = true;
+
+            // String to track the current file name.
+            string FileName = "";
+
+            // Check if the bundle identifier exists in the list.
+            foreach (Log LogFile in ActiveLogs)
             {
-
-                case "MotorName":
-                    e.Column.Header = "Motor Name";
-                    e.Column.IsReadOnly = true;
-                    break;
-
-                case "LogInfo":
-                    e.Column.Header = "Log Info?";
-                    break;
-
-                case "MotorVoltage":
-                    e.Column.Header = "Voltage";
-                    break;
-
-                case "MotorCurrent":
-                    e.Column.Header = "Current";
-                    break;
-
-                case "MotorRPM":
-                    e.Column.Header = "RPM";
-                    break;
-
-                default:
-                    break;
-
-            }
-        }
-
-        // Function that returns the current logging state.
-        public bool IsLogging()
-        {
-            return LoggingActive;
-        }
-
-        private void StartButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LoggingActive = true;
-
-            // Initialize CSV stream writer and CSV file writer with current date and time
-            CSVStreamWriter = new StreamWriter("C:\\Users\\Public\\Documents\\log_" + DateTime.Now.Month + DateTime.Now.Day + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".csv");
-            CSVFileWriter = new CsvWriter(CSVStreamWriter, true);
-            StartButton.IsEnabled = false;
-            StopButton.IsEnabled = true;
-        }
-
-        private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LoggingActive = false;
-
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = false;
-
-            // Close CSV stream writer
-            CSVStreamWriter.Close();
-        }
-
-        public void SetDataInDataGrid(string Name, string Aspect, double Value)
-        {
-            foreach (MotorEntry Motor in MotorEntries)
-            {
-                if (Name == Motor.MotorName)
+                if (LogFile.BundleIdentifier == BundleIdentifier)
                 {
-                    switch (Aspect)
-                    {
-
-                        case "Current":
-                            Motor.MotorCurrent = Value;
-                            break;
-
-                        case "Voltage":
-                            Motor.MotorVoltage = Value;
-                            break;
-
-                        case "EncoderVelocity":
-                            Motor.MotorRPM = Value;
-                            break;
-
-                        case "EncoderPosition":
-                            Motor.MotorPosition = Value;
-                            break;
-
-                        default:
-                            break;
-
-                    }
+                    FileName = LogFile.ActiveFileName;
+                    LogFile.LastTimeLogged = DateTime.Now;
+                    InitializeFile = false;
+                    break;
                 }
             }
 
-            // Refresh the logger's datagrid.
-            LoggerDataGrid.Items.Refresh();
+            // Initialize the file, if it doesn't exist yet.
+            if (InitializeFile)
+            {
+
+                // Create the new log file and add it to the active files.
+                Log NewLogFile = new Log() { BundleIdentifier = BundleIdentifier, ActiveFileName = BundleIdentifier + "-" + DateTime.Now.ToString("hh-mm-ss"), LastTimeLogged = DateTime.Now };
+                ActiveLogs.Add(NewLogFile);
+
+                // Store the new file name.
+                FileName = NewLogFile.ActiveFileName;
+
+                // Create a stream writer to append the header.
+                StreamWriter HeaderWriter = File.AppendText("C:/Max Dashboard Log Files/" + FileName + ".csv");
+
+                // Write the header to the file and close the stream writer.
+                HeaderWriter.WriteLine(HeaderLine);
+                HeaderWriter.Flush();
+                HeaderWriter.Close();
+                                
+            }
+
+            // Create the stream writer for the CSV file.
+            StreamWriter DataWriter = File.AppendText("C:/Max Dashboard Log Files/" + FileName + ".csv");
+
+            // Write the line to the file and close the stream writer.
+            DataWriter.WriteLine(DataLine);
+            DataWriter.Flush();
+            DataWriter.Close();
 
         }
 
-        public void LogDataFromDataGrid(object sender, DoWorkEventArgs e)
+        // Removes any logs that haven't been updated for 5 seconds.
+        public void RemoveStaleLogs(object sender, DoWorkEventArgs e)
         {
 
-            while (true)
+            // Check if any of the logs should be closed.
+            foreach (Log LogFile in ActiveLogs)
             {
-                // Record the start time.
-                TimeSpan StartTime = DateTime.UtcNow - new DateTime(1970, 1, 1);
-
-                if (IsLogging())
+                if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
                 {
-                    // Log data to the CSV file
-                    CSVFileWriter.WriteRecords(MotorEntries);
-                    CSVFileWriter.Flush();
+                    ActiveLogs.Remove(LogFile);
                 }
-
-                // Record the end time.
-                TimeSpan StopTime = DateTime.UtcNow - new DateTime(1970, 1, 1);
-
-                // Sleep the alloted time.
-                Thread.Sleep(50 - ((int)StopTime.TotalMilliseconds - (int)StartTime.TotalMilliseconds));
             }
+
         }
+
     }
+
 }

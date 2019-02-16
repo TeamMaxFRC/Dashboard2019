@@ -42,7 +42,7 @@
         <!--<local:RobotStates Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"/>-->
         <!--<local:ControllerDiagnostics Grid.Column="5" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4"/>-->
 
-        <local:Logger x:Name="LoggerWidget" BorderBrush="Black" BorderThickness="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="5"/>
+        <local:Logger x:Name="LoggerWidget" BorderBrush="Black" BorderThickness="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="5"/>
 
     </Grid>
 
