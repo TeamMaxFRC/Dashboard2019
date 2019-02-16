@@ -153,11 +153,11 @@ namespace Dashboard
                         Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.SetDataInDataGrid(SplitAddress[3], SplitAddress[4], (double)ReceivedMessage.Arguments[0])));
                     }
 
-                    //if (ReceivedMessage.Address.Contains("/Robot/Error/"))
-                    //{
-                    //    bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                    //    Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
-                    //}
+                    if (ReceivedMessage.Address.Contains("/Robot/Error/"))
+                    {
+                        bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                    }
 
                     // Received Controller Values
                     if (ReceivedMessage.Address.Equals("/Robot/Controller"))

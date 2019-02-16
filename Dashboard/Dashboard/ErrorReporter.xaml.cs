@@ -32,18 +32,6 @@ namespace Dashboard
 
         }
 
-        /*private void ErrorButton_Click(object sender, RoutedEventArgs e)
-        {
-            ErrorList.Add(ErrorTransporter.Text);
-        }
-
-        private void ErrorRemoval_Click(object sender, RoutedEventArgs e)
-        {
-            //ErrorList.Remove(ErrorTransporter.Text);
-
-            ErrorList.Remove((string)ErrorBox.SelectedItem);
-        }*/
-
         public void SetError1(String Message, bool Add)
         {
 
