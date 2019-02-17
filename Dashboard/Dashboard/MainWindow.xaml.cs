@@ -75,10 +75,18 @@ namespace Dashboard
             // Have the update worker run in its own thread.
             UpdateWorker.RunWorkerAsync();
 
+            // Resze the dashboard based on the screen resolution.
+            MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
+            MainDashboard.Height = SystemParameters.PrimaryScreenHeight * 0.777777;
+
+            // Set the dashboard into the top of the screen.
+            MainDashboard.Left = 0;
+            MainDashboard.Top = 0;
+
         }
 
         public void Update(object sender, DoWorkEventArgs e)
-        {]
+        {
             //LimelightWidget.InitStream();
 
             // Receive loop from Sharp OSC.

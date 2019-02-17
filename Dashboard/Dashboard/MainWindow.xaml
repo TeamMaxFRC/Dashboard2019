@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1200" x:Name="MainDashboard" Closing="MainDashboard_Closing" Icon="Images/Max.jpg">  
+        Title="Max Dashboard" 
+        Height="500" Width="1200" 
+        x:Name="MainDashboard" 
+        Closing="MainDashboard_Closing" 
+        Icon="Images/Max.jpg"
+        WindowStyle="None" WindowStartupLocation="Manual" 
+        AllowsTransparency="True" ResizeMode="NoResize">  
 
     <Window.Background>
         <ImageBrush x:Name="Background" ImageSource="Images\Background.jpg" Stretch="UniformToFill" />
