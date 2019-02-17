@@ -10,59 +10,38 @@ namespace Dashboard
         public CurrentMeter()
         {
             InitializeComponent();
-            Motor0.Value = 0;
-            Motor1.Value = 0;
-        }
-
-        public void SetLeftMasterMotorValue(double MotorValue0)
-        {
-            Motor0.Value = MotorValue0;
-        }
-        public void SetLeftSlavePrimaryMotorValue(double MotorValue1)
-        {
-            Motor1.Value = MotorValue1;
-        }
-        public void SetLeftSlaveSecondaryMotorValue(double MotorValue2)
-        {
-            Motor2.Value = MotorValue2;
-        }
-        public void SetRightMasterMotorValue(double MotorValue13)
-        {
-            Motor13.Value = MotorValue13;
-        }
-        public void SetRightSlavePrimaryMotorValue(double MotorValue14)
-        {
-            Motor14.Value = MotorValue14;
-        }
-        public void SetRightSlaveSecondaryMotorValue(double MotorValue15)
-        {
-            Motor15.Value = MotorValue15;
         }
 
         public void SetCurrentMeter(double SubsystemCurrent, string Subsystem)
         {
 
+            // For each subsystem, set the current in the bar and the text.
             switch (Subsystem)
             {
 
                 case ("/DriveCurrent"):
-                    Motor0.Value = SubsystemCurrent;
+                    Drive.Value = SubsystemCurrent;
+                    DriveValue.Text = SubsystemCurrent.ToString() + "A";
                     break;
 
                 case ("/LiftCurrent"):
-                    Motor1.Value = SubsystemCurrent;
+                    Lift.Value = SubsystemCurrent;
+                    LiftValue.Text = SubsystemCurrent.ToString() + "A";
                     break;
 
                 case ("/FourBarCurrent"):
-                    Motor2.Value = SubsystemCurrent;
+                    FourBar.Value = SubsystemCurrent;
+                    FourBarValue.Text = SubsystemCurrent.ToString() + "A";
                     break;
 
                 case ("/GathererCurrent"):
-                    Motor13.Value = SubsystemCurrent;
+                    Gatherer.Value = SubsystemCurrent;
+                    GathererValue.Text = SubsystemCurrent.ToString() + "A";
                     break;
 
                 case ("/CompressorCurrent"):
-                    Motor14.Value = SubsystemCurrent;
+                    Compressor.Value = SubsystemCurrent;
+                    CompressorValue.Text = SubsystemCurrent.ToString() + "A";
                     break;
 
                 default:
@@ -70,7 +49,9 @@ namespace Dashboard
 
             }
 
-            TotalCurrent.Value = Motor0.Value + Motor1.Value + Motor2.Value + Motor13.Value + Motor14.Value;
+            // Set the total current to the sum of all the values.
+            Total.Value = Drive.Value + Lift.Value + FourBar.Value + Gatherer.Value + Compressor.Value;
+            TotalValue.Text = Total.Value.ToString() + "A";
 
         }
 

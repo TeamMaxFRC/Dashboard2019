@@ -110,7 +110,7 @@ namespace Dashboard
                             // Print the gyro value every 100 loops.
                             if (PrintTimer % 100 == 0)
                             {
-                                Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
+                                // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
                             }
 
                             // Increment the print timer.
@@ -131,39 +131,15 @@ namespace Dashboard
                         }
 
                         // Show any received motor values.
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftMaster/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftMasterMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlavePrimary/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/LeftSlaveSecondary/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetLeftSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightMaster/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightMasterMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlavePrimary/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlavePrimaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
-                        if (ReceivedMessage.Address.Equals("/Robot/Motors/RightSlaveSecondary/Value"))
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetRightSlaveSecondaryMotorValue((double)ReceivedMessage.Arguments[0])));
-                        }
                         if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
                         {
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                            // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
                         }
 
                         if (ReceivedMessage.Address.Contains("/Robot/Error/"))
                         {
                             bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
+                            // Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
                         }
 
                         // Received Controller Values
@@ -224,7 +200,7 @@ namespace Dashboard
                                 }
                                 else
                                 {
-                                    CurrentWidget.SetCurrentMeter((double)Message.Arguments[0], Message.Address);
+                                    Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetCurrentMeter((double)Message.Arguments[0], Message.Address)));
                                 }
 
                             }
