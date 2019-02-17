@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
-             mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="250">
-    <Grid Background="LightSeaGreen" Margin="0,0,0,10">
+             mc:Ignorable="d" Height="247" Width="251">
+    <Grid Background="LightSeaGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -15,15 +14,25 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="128*"/>
+            <ColumnDefinition Width="114*"/>
+            <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Title Label -->
-        <TextBlock Foreground="Black" Text="Sensor Input" FontSize="20" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique"/>
+        <TextBlock Foreground="Black" Text="Sensor Input" FontSize="20" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique" Margin="69,23,55,38" Grid.RowSpan="2" Width="118" Height="38"/>
 
 
-        <DataGrid Name="SensorInputGrid" ItemsSource="{Binding}" Margin="10,10,10,10" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" AutoGeneratingColumn="SensorInputGrid_AutoGeneratingColumn" CanUserAddRows="False" HeadersVisibility="Column"/>
-        
+        <DataGrid Name="SensorInputGrid" ItemsSource="{Binding}" Margin="15,13,5,16" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" AutoGeneratingColumn="SensorInputGrid_AutoGeneratingColumn" CanUserAddRows="False" HeadersVisibility="Column" RenderTransformOrigin="0.5,0.5">
+            <DataGrid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.064"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </DataGrid.RenderTransform>
+        </DataGrid>
+
     </Grid>
 </UserControl>

@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
-             mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="300">
+             mc:Ignorable="d" Height="186" Width="236">
     <Grid Background="ForestGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -22,7 +21,16 @@
 
         <Ellipse Name="Light2" Fill="Tomato" Height="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Grid.Column="0" />
 
-        <ListBox Name="ErrorBox" ItemsSource="{Binding}" Margin="10" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <ListBox Name="ErrorBox" ItemsSource="{Binding}" Margin="10" Grid.Row="1" Grid.ColumnSpan="3" RenderTransformOrigin="0.5,0.5">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.054"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+        </ListBox>
 
         <TextBlock FontStyle="Oblique" FontSize="30" Text="ERROR" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
