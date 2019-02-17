@@ -178,28 +178,59 @@ namespace Dashboard
                         // The packet is actually a bundle, and should be logged.
                         OscBundle Bundle = (OscBundle)Packet;
 
-                        // Create the relevant data for the CSV file.
-                        string BundleIdentifier = "";
-                        string HeaderLine = "";
-                        string DataLine = "";
-
-                        // Iterate through all the messages and generate the header and data rows.
-                        foreach (OscMessage Message in Bundle.Messages)
+                        // Log the bundle data if the bundle ID contains the word log.
+                        if (((string)Bundle.Messages[0].Arguments[0]).Contains("Log"))
                         {
 
-                            if (Message.Address.Equals("/BundleIdentifier"))
+                            // Create the relevant data for the CSV file.
+                            string BundleIdentifier = "";
+                            string HeaderLine = "";
+                            string DataLine = "";
+
+                            // Iterate through all the messages and generate the header and data rows.
+                            foreach (OscMessage Message in Bundle.Messages)
                             {
-                                BundleIdentifier = (string)Message.Arguments[0];
-                                continue;
+
+                                if (Message.Address.Equals("/BundleIdentifier"))
+                                {
+                                    BundleIdentifier = (string)Message.Arguments[0];
+                                    continue;
+                                }
+
+                                HeaderLine += Message.Address + ",";
+                                DataLine += ((double)Message.Arguments[0]).ToString() + ",";
+
                             }
 
-                            HeaderLine += Message.Address + ",";
-                            DataLine += ((double)Message.Arguments[0]).ToString() + ",";
+                            // Call the log data function.
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.LogData(BundleIdentifier, HeaderLine, DataLine)));
 
                         }
 
-                        // Call the log data function.
-                        Application.Current.Dispatcher.InvokeAsync(new Action(() => LoggerWidget.LogData(BundleIdentifier, HeaderLine, DataLine)));
+                        // If the bundle ID is "CurrentBundle" then send the data to the current widget.
+                        if (((string)Bundle.Messages[0].Arguments[0]).Equals("CurrentBundle"))
+                        {
+
+                            // Create the relevant data for the current tracker.
+                            string BundleIdentifier = "";
+
+                            // Iterate through all the messages and generate the header and data rows.
+                            foreach (OscMessage Message in Bundle.Messages)
+                            {
+
+                                if (Message.Address.Equals("/BundleIdentifier"))
+                                {
+                                    BundleIdentifier = (string)Message.Arguments[0];
+                                }
+                                else
+                                {
+                                    CurrentWidget.SetCurrentMeter((double)Message.Arguments[0], Message.Address);
+                                }
+
+                            }
+
+                        }
+
                     }
 
                 }
@@ -216,16 +247,6 @@ namespace Dashboard
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
             Receiver.Close();
-        }
-
-        private void CurrentWidget_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ConsoleBox_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
 
     }

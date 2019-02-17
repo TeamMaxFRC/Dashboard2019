@@ -38,5 +38,42 @@ namespace Dashboard
         {
             Motor15.Value = MotorValue15;
         }
+
+        public void SetCurrentMeter(double SubsystemCurrent, string Subsystem)
+        {
+
+            switch (Subsystem)
+            {
+
+                case ("/DriveCurrent"):
+                    Motor0.Value = SubsystemCurrent;
+                    break;
+
+                case ("/LiftCurrent"):
+                    Motor1.Value = SubsystemCurrent;
+                    break;
+
+                case ("/FourBarCurrent"):
+                    Motor2.Value = SubsystemCurrent;
+                    break;
+
+                case ("/GathererCurrent"):
+                    Motor13.Value = SubsystemCurrent;
+                    break;
+
+                case ("/CompressorCurrent"):
+                    Motor14.Value = SubsystemCurrent;
+                    break;
+
+                default:
+                    break;
+
+            }
+
+            TotalCurrent.Value = Motor0.Value + Motor1.Value + Motor2.Value + Motor13.Value + Motor14.Value;
+
+        }
+
     }
+
 }

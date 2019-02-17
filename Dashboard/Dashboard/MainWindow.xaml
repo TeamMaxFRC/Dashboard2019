@@ -37,7 +37,7 @@
         <local:ErrorReporter x:Name="ErrorWidget" BorderBrush="Black" BorderThickness="5" Grid.Row="4" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="5"/>
         <local:CurrentMeter x:Name="CurrentWidget" BorderBrush="Black" BorderThickness="5" Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="5"/>
         <local:SensorInput BorderBrush="Black" BorderThickness="5" Grid.Row="3" Grid.Column="6" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="5"/>
-        <local:Console x:Name="ConsoleBox" BorderBrush="Black" BorderThickness="5" Grid.Row="6" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5" Loaded="ConsoleBox_Loaded"/>
+        <local:Console x:Name="ConsoleBox" BorderBrush="Black" BorderThickness="5" Grid.Row="6" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5"/>
         <!--<local:Limelight x:Name="LimelightWidget" BorderBrush="Black" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="4" Margin="5"/>-->
         <!--<local:RobotStates Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"/>-->
         <!--<local:ControllerDiagnostics Grid.Column="5" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4"/>-->
