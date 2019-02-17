@@ -83,9 +83,10 @@ namespace Dashboard
             int PrintTimer = 0;
             //LimelightWidget.InitStream();
 
-            // Receive loop from Rug OSC.
+            // Receive loop from Sharp OSC.
             while (true)
             {
+
                 try
                 {
 

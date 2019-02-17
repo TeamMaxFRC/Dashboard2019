@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -15,6 +16,7 @@ namespace Dashboard
     public partial class Logger : UserControl
     {
 
+        // Background worker that is remove any stale log files.
         private BackgroundWorker StaleLogChecker = new BackgroundWorker();
 
         // Log tracking class.
@@ -34,8 +36,8 @@ namespace Dashboard
             InitializeComponent();
 
             // Start the stale log thread.
-            // StaleLogChecker.DoWork += RemoveStaleLogs;
-            // StaleLogChecker.RunWorkerAsync();
+            StaleLogChecker.DoWork += RemoveStaleLogs;
+            StaleLogChecker.RunWorkerAsync();
         }
 
         // Log the data provided.
@@ -97,6 +99,20 @@ namespace Dashboard
 
         // Removes any logs that haven't been updated for 5 seconds.
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public void ProcessRemoveStaleLogs()
+        {
+            // Check if any of the logs should be closed.
+            foreach (Log LogFile in ActiveLogs)
+            {
+                if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
+                {
+                    ActiveLogs.Remove(LogFile);
+                    break;
+                }
+            }
+        }
+
+        // Removes any logs that haven't been updated for 5 seconds.
         public void RemoveStaleLogs(object sender, DoWorkEventArgs e)
         {
 
@@ -106,22 +122,14 @@ namespace Dashboard
                 // Record the start time.
                 DateTime StartTime = DateTime.Now;
 
-                // Check if any of the logs should be closed.
-                foreach (Log LogFile in ActiveLogs)
-                {
-                    if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
-                    {
-                        ActiveLogs.Remove(LogFile);
-                        break;
-                    }
-                }
+                ProcessRemoveStaleLogs();
 
                 // Record the stop time.
                 DateTime StopTime = DateTime.Now;
 
                 // Sleep the background worker for 1 second
                 TimeSpan PassedTime = StopTime - StartTime;
-                Task.Delay(1000 - (int)PassedTime.TotalMilliseconds);
+                Thread.Sleep(1000);
 
             }
 
