@@ -78,9 +78,7 @@ namespace Dashboard
         }
 
         public void Update(object sender, DoWorkEventArgs e)
-        {
-            // Time before another console print occurs.
-            int PrintTimer = 0;
+        {]
             //LimelightWidget.InitStream();
 
             // Receive loop from Sharp OSC.
@@ -104,18 +102,6 @@ namespace Dashboard
                         // Get the next message. This receive will not block.
                         OscMessage ReceivedMessage = (OscMessage)Packet;
 
-                        // Show the recieved gyro values
-                        if (ReceivedMessage.Address.Equals("/Robot/NavX/Gyro"))
-                        {
-                            // Print the gyro value every 100 loops.
-                            if (PrintTimer % 100 == 0)
-                            {
-                                // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine(((float)ReceivedMessage.Arguments[0]).ToString("0.###"))));
-                            }
-
-                            // Increment the print timer.
-                            PrintTimer++;
-                        }
                         // Show any recieved Limelight values.
                         if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
                         {

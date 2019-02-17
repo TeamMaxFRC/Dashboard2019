@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,7 +32,7 @@ namespace Dashboard
         }
 
         // List of log files open.
-        List<Log> ActiveLogs = new List<Log>();
+        ObservableCollection<Log> ActiveLogs = new ObservableCollection<Log>();
 
         // Constructor for the logging widget.
         public Logger()
@@ -46,6 +45,8 @@ namespace Dashboard
 
             // Initialize the directory text.
             DirectoryText.Text = ActiveDirectory;
+
+            ActiveLogsListBox.ItemsSource = ActiveLogs;
         }
 
         // Log the data provided.
@@ -117,7 +118,7 @@ namespace Dashboard
             {
                 if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
                 {
-                    ActiveLogs.Remove(LogFile);
+                    Application.Current.Dispatcher.InvokeAsync(new Action(() => ActiveLogs.Remove(LogFile)));
                     break;
                 }
             }
