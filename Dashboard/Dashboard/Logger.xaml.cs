@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Dashboard
@@ -19,6 +21,9 @@ namespace Dashboard
         // Background worker that is remove any stale log files.
         private BackgroundWorker StaleLogChecker = new BackgroundWorker();
 
+        // Directory to store logs to.
+        string ActiveDirectory = "C:/Max Dashboard Log Files";
+
         // Log tracking class.
         public class Log
         {
@@ -29,7 +34,7 @@ namespace Dashboard
 
         // List of log files open.
         List<Log> ActiveLogs = new List<Log>();
-        
+
         // Constructor for the logging widget.
         public Logger()
         {
@@ -38,6 +43,9 @@ namespace Dashboard
             // Start the stale log thread.
             StaleLogChecker.DoWork += RemoveStaleLogs;
             StaleLogChecker.RunWorkerAsync();
+
+            // Initialize the directory text.
+            DirectoryText.Text = ActiveDirectory;
         }
 
         // Log the data provided.
@@ -46,7 +54,7 @@ namespace Dashboard
         {
 
             // Create the specific directory if it doesn't exist.
-            System.IO.Directory.CreateDirectory("C:/Max Dashboard Log Files/");
+            System.IO.Directory.CreateDirectory(ActiveDirectory);
 
             // Boolean to check if the file must be initialized.
             bool InitializeFile = true;
@@ -78,17 +86,20 @@ namespace Dashboard
                 FileName = NewLogFile.ActiveFileName;
 
                 // Create a stream writer to append the header.
-                StreamWriter HeaderWriter = File.AppendText("C:/Max Dashboard Log Files/" + FileName + ".csv");
+                StreamWriter HeaderWriter = File.AppendText(ActiveDirectory + "/" + FileName + ".csv");
 
                 // Write the header to the file and close the stream writer.
                 HeaderWriter.WriteLine(HeaderLine);
                 HeaderWriter.Flush();
                 HeaderWriter.Close();
-                                
+
+                // Prevent anyone from changing the active directory.
+                SelectDirectoryButton.IsEnabled = true;
+
             }
 
             // Create the stream writer for the CSV file.
-            StreamWriter DataWriter = File.AppendText("C:/Max Dashboard Log Files/" + FileName + ".csv");
+            StreamWriter DataWriter = File.AppendText(ActiveDirectory + "/" + FileName + ".csv");
 
             // Write the line to the file and close the stream writer.
             DataWriter.WriteLine(DataLine);
@@ -110,6 +121,29 @@ namespace Dashboard
                     break;
                 }
             }
+
+            // Check if someone can change the directory.
+            if (ActiveLogs.Count == 0)
+            {
+                Application.Current.Dispatcher.InvokeAsync(new Action(() => EnableSelectDirectoryButton()));
+            }
+            else
+            {
+                Application.Current.Dispatcher.InvokeAsync(new Action(() => DisableSelectDirectoryButton()));
+            }
+
+        }
+
+        // Enables the select directory button.
+        private void EnableSelectDirectoryButton()
+        {
+            SelectDirectoryButton.IsEnabled = true;
+        }
+
+        // Disables the select directory button.
+        private void DisableSelectDirectoryButton()
+        {
+            SelectDirectoryButton.IsEnabled = false;
         }
 
         // Removes any logs that haven't been updated for 5 seconds.
@@ -129,12 +163,31 @@ namespace Dashboard
 
                 // Sleep the background worker for 1 second
                 TimeSpan PassedTime = StopTime - StartTime;
-                Thread.Sleep(1000);
+                Thread.Sleep(1000 - (int)PassedTime.TotalMilliseconds);
 
             }
 
         }
 
-    }
+        private void SelectDirectoryButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            using (var Dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult Result = Dialog.ShowDialog();
 
+                if (Dialog.SelectedPath != "")
+                {
+                    ActiveDirectory = Dialog.SelectedPath;
+                    DirectoryText.Text = Dialog.SelectedPath;
+                }
+
+            }
+
+        }
+
+        private void OpenDirectoryButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Process.Start(@ActiveDirectory);
+        }
+    }
 }
