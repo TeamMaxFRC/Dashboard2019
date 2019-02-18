@@ -51,7 +51,7 @@ namespace ElgatoStreamDeckController
             var Deck = StreamDeck.OpenDevice();
 
             // Set the brightness of the keys.
-            Deck.SetBrightness(75);
+            Deck.SetBrightness(100);
 
             // Register the key pressed event handler.
             Deck.KeyStateChanged += StreamDeckKeyPressed;

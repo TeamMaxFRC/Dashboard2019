@@ -101,6 +101,7 @@ namespace Dashboard
 
                     // Receive the packet, but skip if it's null.
                     OscPacket Packet = Receiver.Receive();
+
                     if (Packet == null)
                     {
                         Thread.Sleep(1);
@@ -201,6 +202,8 @@ namespace Dashboard
                                 }
 
                             }
+
+                            // TODO: Error bundle handling.
 
                         }
 
