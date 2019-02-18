@@ -29,22 +29,15 @@ namespace Dashboard
         {
             InitializeComponent();
             ErrorBox.ItemsSource = ErrorList;
-
         }
 
-        public void SetError1(String Message, bool Add)
+        public void SetErrors(List<string> Errors)
         {
+            ErrorList.Clear();
 
-            if (Add)
+            foreach(string Error in Errors)
             {
-                if (!ErrorList.Contains(Message.Replace("/Robot/Error/", "")))
-                {
-                    ErrorList.Add(Message.Replace("/Robot/Error/", ""));
-                }
-            }
-            else
-            {
-                ErrorList.Remove(Message.Replace("/Robot/Error/", ""));
+                ErrorList.Add(Error);
             }
 
         }
