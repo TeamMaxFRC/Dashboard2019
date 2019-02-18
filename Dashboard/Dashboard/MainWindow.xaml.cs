@@ -83,9 +83,20 @@ namespace Dashboard
             // Have the update worker run in its own thread.
             UpdateWorker.RunWorkerAsync();
 
-            // Resze the dashboard based on the screen resolution.
+            // Set the dashboard to the top left corner of the screen.
+            MainDashboard.Left = 0;
+            MainDashboard.Top = 0;
+            MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
+            // Find the driver station after waiting for it.
+            Thread.Sleep(1500);
 
+            DriverStation = FindDriverStation();
+
+            if (DriverStation != IntPtr.Zero)
+            {
+                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
+            }
         }
 
         public void Update(object sender, DoWorkEventArgs e)
@@ -352,18 +363,6 @@ namespace Dashboard
             });
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DriverStation = FindDriverStation();
-            if (DriverStation != IntPtr.Zero)
-            {
-                MainDashboard.Left = 0;
-                MainDashboard.Top = 0;
-                MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
-                double test = SystemParameters.PrimaryScreenHeight;
-                double Test = DriverStationRect.Top - 1;
-                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
-            }
-        }
     }
+
 }

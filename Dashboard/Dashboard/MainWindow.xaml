@@ -40,7 +40,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Resize" Click="Button_Click"/>
 
         <local:CurrentMeter x:Name="CurrentWidget" BorderBrush="Black" BorderThickness="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="4" Margin="5"/>
 
