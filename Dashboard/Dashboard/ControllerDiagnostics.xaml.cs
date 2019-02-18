@@ -237,9 +237,21 @@ namespace Dashboard
             }
         }
 
-        public void SetLeftTrigger1(double axis)
+        public void SetLeftTrigger(double LeftTrigAxis)
         {
-
+            LeftTrigger.Value = LeftTrigAxis;
+        }
+        public void SetLeftTrigger2(double LeftTrigAxis2)
+        {
+            LeftTrigger.Value = LeftTrigAxis2;
+        }
+        public void SetRightTrigger(double RightTrigAxis)
+        {
+            LeftTrigger.Value = RightTrigAxis;
+        }
+        public void SetRightTrigger2(double RightTrigAxis2)
+        {
+            LeftTrigger.Value = RightTrigAxis2;
         }
     }
 }
