@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Diagnostics;
+using System.Text;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Drawing;
 
 namespace Dashboard
 {
@@ -55,6 +60,8 @@ namespace Dashboard
 
     public partial class MainWindow : Window
     {
+        public IntPtr DriverStation;
+        public Rect DriverStationRect;
 
         // Background worker which will receive the OSC data.
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
@@ -65,6 +72,7 @@ namespace Dashboard
         public MainWindow()
         {
             InitializeComponent();
+            LoadDriverStation();
 
             // Connect the receiver to the proper port.
             Receiver = new UDPListener(5803);
@@ -76,12 +84,7 @@ namespace Dashboard
             UpdateWorker.RunWorkerAsync();
 
             // Resze the dashboard based on the screen resolution.
-            MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
-            MainDashboard.Height = SystemParameters.PrimaryScreenHeight * 0.777777;
 
-            // Set the dashboard into the top of the screen.
-            MainDashboard.Left = 0;
-            MainDashboard.Top = 0;
 
         }
 
@@ -227,11 +230,135 @@ namespace Dashboard
             }
         }
 
+        private void LoadDriverStation()
+        {
+            try // Try to launch the FRC Driver Station
+            {
+                Process.Start(@"C:\Program Files (x86)\FRC Driver Station\DriverStation.exe");
+            }
+            catch
+            {
+
+            }
+            DriverStation = FindDriverStation();
+        }
+
+        public IntPtr FindDriverStation()
+        {
+            try
+            {
+                List<IntPtr> PossibleWindows = FindWindowsWithText("FRC Driver Station").ToList();
+                if (PossibleWindows.Count != 0)
+                {
+                    int count = 0;
+                    Rect rect = new Rect();
+                    foreach (int element in PossibleWindows)
+                    {
+                        GetWindowRect(PossibleWindows[count], ref rect);
+                        if (rect.Left == 0 && rect.Right >= SystemParameters.PrimaryScreenWidth - 1 && rect.Top > SystemParameters.PrimaryScreenHeight * .5)
+                        {
+                            DriverStationRect = rect;
+                            return PossibleWindows[count];
+                        }
+                        count++;
+                    }
+                    return IntPtr.Zero;
+                }
+                else
+                {
+                    return IntPtr.Zero;
+                }
+            }
+            catch
+            {
+                return IntPtr.Zero;
+            }
+        }
+
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
             Receiver.Close();
         }
 
-    }
+        // Import functions from user32.dll
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder strText, int maxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLength(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hwnd, ref Rect rectangle);
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rect
+        {
+            public int Left;        // x position of upper-left corner
+            public int Top;         // y position of upper-left corner
+            public int Right;       // x position of lower-right corner
+            public int Bottom;      // y position of lower-right corner
+        }
+
+        // Code for detecting the current position of different windows
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam); // Delegate to filter which windows to include 
+        /// <summary> Get the text for the window pointed to by hWnd </summary>
+        public static string GetWindowText(IntPtr hWnd)
+        {
+            int size = GetWindowTextLength(hWnd);
+            if (size > 0)
+            {
+                var builder = new StringBuilder(size + 1);
+                GetWindowText(hWnd, builder, builder.Capacity);
+                return builder.ToString();
+            }
+
+            return String.Empty;
+        }
+        /// <summary> Find all windows that match the given filter </summary>
+        /// <param name="filter"> A delegate that returns true for windows
+        ///    that should be returned and false for windows that should
+        ///    not be returned </param>
+        public static IEnumerable<IntPtr> FindWindows(EnumWindowsProc filter)
+        {
+            IntPtr found = IntPtr.Zero;
+            List<IntPtr> windows = new List<IntPtr>();
+
+            EnumWindows(delegate (IntPtr wnd, IntPtr param)
+            {
+                if (filter(wnd, param))
+                {
+                    // only add the windows that pass the filter
+                    windows.Add(wnd);
+                }
+
+                // but return true here so that we iterate all windows
+                return true;
+            }, IntPtr.Zero);
+
+            return windows;
+        }
+        /// <summary> Find all windows that contain the given title text </summary>
+        /// <param name="titleText"> The text that the window title must contain. </param>
+        public static IEnumerable<IntPtr> FindWindowsWithText(string titleText)
+        {
+            return FindWindows(delegate (IntPtr wnd, IntPtr param)
+            {
+                return GetWindowText(wnd).Contains(titleText);
+            });
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DriverStation = FindDriverStation();
+            if (DriverStation != IntPtr.Zero)
+            {
+                MainDashboard.Left = 0;
+                MainDashboard.Top = 0;
+                MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
+                double test = SystemParameters.PrimaryScreenHeight;
+                double Test = DriverStationRect.Top - 1;
+                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
+            }
+        }
+    }
 }
