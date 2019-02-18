@@ -83,9 +83,20 @@ namespace Dashboard
             // Have the update worker run in its own thread.
             UpdateWorker.RunWorkerAsync();
 
-            // Resze the dashboard based on the screen resolution.
+            // Set the dashboard to the top left corner of the screen.
+            MainDashboard.Left = 0;
+            MainDashboard.Top = 0;
+            MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
+            // Find the driver station after waiting for it.
+            Thread.Sleep(1500);
 
+            DriverStation = FindDriverStation();
+
+            if (DriverStation != IntPtr.Zero)
+            {
+                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
+            }
         }
 
         public void Update(object sender, DoWorkEventArgs e)
@@ -134,17 +145,6 @@ namespace Dashboard
                             // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
                         }
 
-                        if (ReceivedMessage.Address.Contains("/Robot/Error/"))
-                        {
-                            bool ErrorState = (int)ReceivedMessage.Arguments[0] == 1;
-                            // Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetError1(ReceivedMessage.Address, ErrorState)));
-                        }
-
-                        // Received Controller Values
-                        if (ReceivedMessage.Address.Equals("/Robot/Controller"))
-                        {
-                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => ControllerDiagnostics.UpdateButtonData((String)ReceivedMessage.Arguments[0])));
-                        }
                     }
                     else
                     {
@@ -232,9 +232,11 @@ namespace Dashboard
             }
         }
 
+        // Loads the FRC driver station.
         private void LoadDriverStation()
         {
-            try // Try to launch the FRC Driver Station
+
+            try
             {
                 Process.Start(@"C:\Program Files (x86)\FRC Driver Station\DriverStation.exe");
             }
@@ -242,34 +244,43 @@ namespace Dashboard
             {
 
             }
+
+            // Find the driver station.
             DriverStation = FindDriverStation();
         }
 
+        // Find the location of the driver station.
         public IntPtr FindDriverStation()
         {
             try
             {
                 List<IntPtr> PossibleWindows = FindWindowsWithText("FRC Driver Station").ToList();
+
                 if (PossibleWindows.Count != 0)
                 {
-                    int count = 0;
-                    Rect rect = new Rect();
-                    foreach (int element in PossibleWindows)
+                    
+                    Rect Rectangle = new Rect();
+
+                    foreach (IntPtr Window in PossibleWindows)
                     {
-                        GetWindowRect(PossibleWindows[count], ref rect);
-                        if (rect.Left == 0 && rect.Right >= SystemParameters.PrimaryScreenWidth - 1 && rect.Top > SystemParameters.PrimaryScreenHeight * .5)
+                        GetWindowRect(Window, ref Rectangle);
+
+                        if (Rectangle.Left == 0 && Rectangle.Right >= SystemParameters.PrimaryScreenWidth - 1 && Rectangle.Top > SystemParameters.PrimaryScreenHeight * .5)
                         {
-                            DriverStationRect = rect;
-                            return PossibleWindows[count];
+                            DriverStationRect = Rectangle;
+                            return Window;
                         }
-                        count++;
+                        
                     }
+
                     return IntPtr.Zero;
+
                 }
                 else
                 {
                     return IntPtr.Zero;
                 }
+
             }
             catch
             {
@@ -284,83 +295,76 @@ namespace Dashboard
 
         // Import functions from user32.dll
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder strText, int maxCount);
+        private static extern int GetWindowText(IntPtr hWindow, StringBuilder StrText, int MaxCount);
+
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowTextLength(IntPtr hWnd);
+        private static extern int GetWindowTextLength(IntPtr hWindow);
+
         [DllImport("user32.dll")]
-        private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+        private static extern bool EnumWindows(EnumWindowsProc EnumProc, IntPtr lParam);
+
         [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hwnd, ref Rect rectangle);
+        public static extern bool GetWindowRect(IntPtr hWindow, ref Rect Rectangle);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rect
         {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
 
         // Code for detecting the current position of different windows
-        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam); // Delegate to filter which windows to include 
+        public delegate bool EnumWindowsProc(IntPtr hWindow, IntPtr lParam);
+
         /// <summary> Get the text for the window pointed to by hWnd </summary>
-        public static string GetWindowText(IntPtr hWnd)
+        public static string GetWindowText(IntPtr hWindow)
         {
-            int size = GetWindowTextLength(hWnd);
-            if (size > 0)
+            int Size = GetWindowTextLength(hWindow);
+
+            if (Size > 0)
             {
-                var builder = new StringBuilder(size + 1);
-                GetWindowText(hWnd, builder, builder.Capacity);
-                return builder.ToString();
+                var Builder = new StringBuilder(Size + 1);
+                GetWindowText(hWindow, Builder, Builder.Capacity);
+                return Builder.ToString();
             }
 
             return String.Empty;
         }
         /// <summary> Find all windows that match the given filter </summary>
-        /// <param name="filter"> A delegate that returns true for windows
+        /// <param name="Filter"> A delegate that returns true for windows
         ///    that should be returned and false for windows that should
         ///    not be returned </param>
-        public static IEnumerable<IntPtr> FindWindows(EnumWindowsProc filter)
+        public static IEnumerable<IntPtr> FindWindows(EnumWindowsProc Filter)
         {
-            IntPtr found = IntPtr.Zero;
-            List<IntPtr> windows = new List<IntPtr>();
+            List<IntPtr> Windows = new List<IntPtr>();
 
-            EnumWindows(delegate (IntPtr wnd, IntPtr param)
+            EnumWindows(delegate (IntPtr Window, IntPtr Param)
             {
-                if (filter(wnd, param))
+                if (Filter(Window, Param))
                 {
-                    // only add the windows that pass the filter
-                    windows.Add(wnd);
+                    // Only add the windows that pass the filter.
+                    Windows.Add(Window);
                 }
 
-                // but return true here so that we iterate all windows
+                // But return true here so that we iterate all windows.
                 return true;
+
             }, IntPtr.Zero);
 
-            return windows;
+            return Windows;
         }
         /// <summary> Find all windows that contain the given title text </summary>
-        /// <param name="titleText"> The text that the window title must contain. </param>
-        public static IEnumerable<IntPtr> FindWindowsWithText(string titleText)
+        /// <param name="TitleText"> The text that the window title must contain. </param>
+        public static IEnumerable<IntPtr> FindWindowsWithText(string TitleText)
         {
-            return FindWindows(delegate (IntPtr wnd, IntPtr param)
+            return FindWindows(delegate (IntPtr Window, IntPtr Param)
             {
-                return GetWindowText(wnd).Contains(titleText);
+                return GetWindowText(Window).Contains(TitleText);
             });
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DriverStation = FindDriverStation();
-            if (DriverStation != IntPtr.Zero)
-            {
-                MainDashboard.Left = 0;
-                MainDashboard.Top = 0;
-                MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
-                double test = SystemParameters.PrimaryScreenHeight;
-                double Test = DriverStationRect.Top - 1;
-                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
-            }
-        }
     }
+
 }
