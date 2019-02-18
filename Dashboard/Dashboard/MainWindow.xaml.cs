@@ -174,25 +174,35 @@ namespace Dashboard
                         if (((string)Bundle.Messages[0].Arguments[0]).Equals("CurrentBundle"))
                         {
 
-                            // Create the relevant data for the current tracker.
-                            string BundleIdentifier = "";
-
                             // Iterate through all the messages and generate the header and data rows.
                             foreach (OscMessage Message in Bundle.Messages)
                             {
 
-                                if (Message.Address.Equals("/BundleIdentifier"))
-                                {
-                                    BundleIdentifier = (string)Message.Arguments[0];
-                                }
-                                else
+                                if (!Message.Address.Equals("/BundleIdentifier"))
                                 {
                                     Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetCurrentMeter((double)Message.Arguments[0], Message.Address)));
                                 }
 
                             }
 
-                            // TODO: Error bundle handling.
+                        }
+
+                        // If the bundle ID is "ErrorBundle" then send the data to the error reporter.
+                        if (((string)Bundle.Messages[0].Arguments[0]).Equals("ErrorBundle"))
+                        {
+
+                            List<string> Errors = new List<string>();
+
+                            // Iterate through all the messages and generate the header and data rows.
+                            foreach (OscMessage Message in Bundle.Messages)
+                            {
+                                if (!Message.Address.Equals("/BundleIdentifier"))
+                                {
+                                    Errors.Add((string)Message.Arguments[0]);
+                                }
+                            }
+
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetErrors(Errors)));
 
                         }
 
