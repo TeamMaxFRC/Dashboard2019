@@ -209,7 +209,7 @@ namespace Dashboard
                             {
                                 if (!Message.Address.Equals("/BundleIdentifier"))
                                 {
-                                    Errors.Add((string)Message.Arguments[0]);
+                                    Errors.Add(((int)Message.Arguments[0]).ToString());
                                 }
                             }
 
