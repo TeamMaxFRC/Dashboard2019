@@ -209,10 +209,17 @@ namespace Dashboard
                             {
                                 if (!Message.Address.Equals("/BundleIdentifier"))
                                 {
-                                    Errors.Add(((int)Message.Arguments[0]).ToString());
+
+                                    foreach (int Argument in Message.Arguments)
+                                    {
+                                        if (Argument != -1)
+                                        {
+                                            Errors.Add(ConvertErrorAddress(Message.Address) + ConvertFault(Argument));
+                                        }
+                                    }
                                 }
                             }
-
+                            
                             Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetErrors(Errors)));
 
                         }
@@ -230,6 +237,100 @@ namespace Dashboard
                 }
 
             }
+        }
+
+        // Convert the fault ID into a human readable string.
+        private string ConvertFault(int Id)
+        {
+
+            switch (Id)
+            {
+             
+                case 0:
+                    return "Brownout";
+
+                case 1:
+                    return "Over Current";
+
+                case 2:
+                    return "Over Voltage";
+
+                case 3:
+                    return "Motor Fault";
+
+                case 4:
+                    return "Sensor Fault";
+
+                case 5:
+                    return "Stall";
+
+                case 6:
+                    return "EEPROMCRC";
+
+                case 7:
+                    return "CANTX";
+
+                case 8:
+                    return "CANRX";
+
+                case 9:
+                    return "Has Reset";
+
+                case 10:
+                    return "DRV Fault";
+
+                case 11:
+                    return "Other Fault!";
+
+                case 12:
+                    return "Soft Limit Fwd";
+
+                case 13:
+                    return "Soft Limit Rev";
+
+                case 14:
+                    return "Hard Limit Fwd";
+
+                case 15:
+                    return "Hard Limit Rev";
+
+                default:
+                    return "";
+
+            }
+
+        }
+
+        // Convert the fault ID into a human readable string.
+        private string ConvertErrorAddress(string Address)
+        {
+
+            switch (Address)
+            {
+
+               case "/LeftMasterFaults":
+                    return "Left Master Spark: ";
+
+               case "/RightMasterFaults":
+                    return "Right Master Spark: ";
+
+               case "/LeftSlavePrimaryFaults":
+                    return "Left Slave Primary Spark: ";
+
+               case "/RightSlavePrimaryFaults":
+                    return "Right Slave Primary Spark: ";
+
+               case "/LeftSlaveSecondaryFaults":
+                    return "Left Slave Secondary Spark: ";
+
+               case "/RightSlaveSecondaryFaults":
+                    return "Right Slave Secondary Spark: ";
+
+                default:
+                    return "";
+
+            }
+
         }
 
         // Loads the FRC driver station.
