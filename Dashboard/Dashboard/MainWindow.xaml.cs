@@ -69,6 +69,9 @@ namespace Dashboard
         // Create the OSC receiver.
         private static UDPListener Receiver;
 
+        // Create the stream deck controller process.
+        Process StreamDeckController;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -83,13 +86,16 @@ namespace Dashboard
             // Have the update worker run in its own thread.
             UpdateWorker.RunWorkerAsync();
 
+            // Start the stream deck control.
+            StreamDeckController = Process.Start(@"ElgatoStreamDeckController.exe");
+
             // Set the dashboard to the top left corner of the screen.
             MainDashboard.Left = 0;
             MainDashboard.Top = 0;
             MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
             // Find the driver station after waiting for it.
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
 
             DriverStation = FindDriverStation();
 
@@ -290,7 +296,11 @@ namespace Dashboard
 
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
+            // Close the OSC receiver.
             Receiver.Close();
+
+            // Close the vJoy controller application.
+            StreamDeckController.Kill();            
         }
 
         // Import functions from user32.dll
