@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ElgatoStreamDeckController">
+      <HintPath>..\ElgatoStreamDeckController\bin\Debug\ElgatoStreamDeckController.exe</HintPath>
+    </Reference>
     <Reference Include="MjpegProcessor, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MjpegProcessor.dll</HintPath>

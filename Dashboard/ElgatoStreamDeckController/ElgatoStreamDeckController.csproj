@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ElgatoStreamDeckController</RootNamespace>
     <AssemblyName>ElgatoStreamDeckController</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -67,4 +67,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)*.exe" "$(SolutionDir)Dashboard\bin\Debug"
+xcopy /Y "*.dll" "$(SolutionDir)Dashboard\bin\Debug"
+xcopy /Y "*.png" "$(SolutionDir)Dashboard\bin\Debug"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

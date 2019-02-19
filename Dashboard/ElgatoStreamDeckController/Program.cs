@@ -79,5 +79,13 @@ namespace ElgatoStreamDeckController
             }
 
         }
+
+        // Returns the path of the program executable.
+        public string GetPath()
+        {
+            string Folder = Environment.CurrentDirectory;
+            return Folder;
+        }
+
     }
 }
