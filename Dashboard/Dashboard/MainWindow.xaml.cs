@@ -9,6 +9,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Linq;
 using System.Drawing;
+using System.Net;
+using System.Net.NetworkInformation;
 
 namespace Dashboard
 {
@@ -65,6 +67,7 @@ namespace Dashboard
 
         // Background worker which will receive the OSC data.
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
+        private BackgroundWorker LimelightWorker = new BackgroundWorker();
 
         // Create the OSC receiver.
         private static UDPListener Receiver;
@@ -82,9 +85,11 @@ namespace Dashboard
 
             // Link the update method to the background worker.
             UpdateWorker.DoWork += Update;
+            LimelightWorker.DoWork += LimelightUpdate;
 
             // Have the update worker run in its own thread.
             UpdateWorker.RunWorkerAsync();
+            LimelightWorker.RunWorkerAsync();
 
             // Start the stream deck control.
             StreamDeckController = Process.Start(@"ElgatoStreamDeckController.exe");
@@ -103,6 +108,12 @@ namespace Dashboard
             {
                 MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
             }
+        }
+
+        public void LimelightUpdate(object sender, DoWorkEventArgs e)
+        {
+                //LimelightWidget.StartStream();
+                Thread.Sleep(1 / 30);
         }
 
         public void Update(object sender, DoWorkEventArgs e)
@@ -144,13 +155,10 @@ namespace Dashboard
                         {
                             //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
                         }
-
-                        // Show any received motor values.
                         if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
                         {
-                            // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((string)ReceivedMessage.Arguments[0])));
                         }
-
                     }
                     else
                     {
@@ -225,12 +233,12 @@ namespace Dashboard
                                     }
                                 }
                             }
-                            
+
                             Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetErrors(Errors)));
 
                         }
 
-                        
+
 
                     }
 
@@ -251,7 +259,7 @@ namespace Dashboard
 
             switch (Id)
             {
-             
+
                 case 0:
                     return "Brownout";
 
@@ -314,22 +322,22 @@ namespace Dashboard
             switch (Address)
             {
 
-               case "/LeftMasterFaults":
+                case "/LeftMasterFaults":
                     return "Left Master Spark: ";
 
-               case "/RightMasterFaults":
+                case "/RightMasterFaults":
                     return "Right Master Spark: ";
 
-               case "/LeftSlavePrimaryFaults":
+                case "/LeftSlavePrimaryFaults":
                     return "Left Slave Primary Spark: ";
 
-               case "/RightSlavePrimaryFaults":
+                case "/RightSlavePrimaryFaults":
                     return "Right Slave Primary Spark: ";
 
-               case "/LeftSlaveSecondaryFaults":
+                case "/LeftSlaveSecondaryFaults":
                     return "Left Slave Secondary Spark: ";
 
-               case "/RightSlaveSecondaryFaults":
+                case "/RightSlaveSecondaryFaults":
                     return "Right Slave Secondary Spark: ";
 
                 default:
@@ -365,7 +373,7 @@ namespace Dashboard
 
                 if (PossibleWindows.Count != 0)
                 {
-                    
+
                     Rect Rectangle = new Rect();
 
                     foreach (IntPtr Window in PossibleWindows)
@@ -377,7 +385,7 @@ namespace Dashboard
                             DriverStationRect = Rectangle;
                             return Window;
                         }
-                        
+
                     }
 
                     return IntPtr.Zero;
@@ -401,7 +409,7 @@ namespace Dashboard
             Receiver.Close();
 
             // Close the vJoy controller application.
-            StreamDeckController.Kill();            
+            StreamDeckController.Kill();
         }
 
         // Import functions from user32.dll
@@ -476,6 +484,22 @@ namespace Dashboard
             });
         }
 
-    }
+        private bool PingLimelight()
+        {
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingresult = ping.Send("limelight.local");
+                if (pingresult.Status.ToString() == "Success")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
 
+            }
+            return false;
+        }
+    }
 }
