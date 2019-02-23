@@ -257,9 +257,7 @@ namespace Dashboard
                             Application.Current.Dispatcher.InvokeAsync(new Action(() => ErrorWidget.SetErrors(Errors)));
 
                         }
-
-
-
+                                               
                     }
 
                 }
