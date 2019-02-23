@@ -42,8 +42,12 @@ namespace Dashboard
                     MagneticGatherEncoderText.Text = HatchGrabbed.ToString();
                     break;
 
-                case ("/FourBarEncoderPosition"):
-                    FourBarEncoderPositionText.Text = SensorValue.ToString();
+                case ("/FourBarEncoderRelativePosition"):
+                    FourBarEncoderRelativePositionText.Text = SensorValue.ToString();
+                    break;
+
+                case ("/FourBarEncoderAbsolutePosition"):
+                    FourBarEncoderAbsolutePositionText.Text = SensorValue.ToString();
                     break;
 
                 default:
