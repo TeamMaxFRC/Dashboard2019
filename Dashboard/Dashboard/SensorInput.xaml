@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="300">
-    <Grid Background="LightSteelBlue">
+    <Grid Background="LightSteelBlue" RenderTransformOrigin="0.503,0.484">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -26,18 +26,21 @@
         <TextBlock Foreground="Black" Text="Sensor Input" FontSize="30" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Normal"/>
 
         <!-- Sensor Titles -->
-        <TextBlock Text="Lift Encoder Velocity" FontSize="12" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Lift Encoder Velocity" FontSize="12" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Text="Lift Encoder Position" FontSize="12" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Text="Left Encoder Velocity" FontSize="12" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Text="Right Encoder Velocity" FontSize="12" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Text="Magnetic Gather Encoder" FontSize="12" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Four Bar Encoder Position" FontSize="12" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
 
         <!-- Sensor Values -->
-        <TextBlock x:Name="LiftEncoderVelocityText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="LiftEncoderVelocityText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="LiftEncoderPositionText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="LeftEncoderVelocityText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="RightEncoderVelocityText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="MagneticGatherEncoderText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="FourBarEncoderPositionText" Text="0" FontSize="12" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
     </Grid>
 </UserControl>
