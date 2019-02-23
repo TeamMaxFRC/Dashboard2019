@@ -142,7 +142,7 @@ namespace Dashboard
                         // Get the next message. This receive will not block.
                         OscMessage ReceivedMessage = (OscMessage)Packet;
 
-                        // Show any recieved Limelight values.
+                        // Show any received Limelight values.
                         if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
                         {
                             //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
@@ -155,10 +155,13 @@ namespace Dashboard
                         {
                             //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
                         }
+
+                        // Show any received Console values.
                         if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
                         {
                             Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((string)ReceivedMessage.Arguments[0])));
                         }
+
                     }
                     else
                     {
@@ -206,6 +209,23 @@ namespace Dashboard
                                 if (!Message.Address.Equals("/BundleIdentifier"))
                                 {
                                     Application.Current.Dispatcher.InvokeAsync(new Action(() => CurrentWidget.SetCurrentMeter((double)Message.Arguments[0], Message.Address)));
+                                }
+
+                            }
+
+                        }
+
+                        // If the bundle ID is "SensorInputBundle" then send the data to the current widget.
+                        if (((string)Bundle.Messages[0].Arguments[0]).Equals("SensorInputBundle"))
+                        {
+
+                            // Iterate through all the messages and generate the header and data rows.
+                            foreach (OscMessage Message in Bundle.Messages)
+                            {
+
+                                if (!Message.Address.Equals("/BundleIdentifier"))
+                                {
+                                    Application.Current.Dispatcher.InvokeAsync(new Action(() => SensorInputWidget.SetSensorValue((double)Message.Arguments[0], Message.Address)));
                                 }
 
                             }
