@@ -95,7 +95,7 @@ namespace Dashboard
             MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
             // Find the driver station after waiting for it.
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
 
             DriverStation = FindDriverStation();
 
