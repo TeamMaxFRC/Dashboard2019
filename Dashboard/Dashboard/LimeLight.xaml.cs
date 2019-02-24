@@ -38,7 +38,8 @@ namespace Dashboard
         void _mjpeg_Error(object sender, ErrorEventArgs e)
         {
             _mjpeg.StopStream();
-            //CurrentlyStreaming = false;
+            Thread.Sleep(5000);
+            StartStream();
         }
 
         public void UpdateX(double X)
