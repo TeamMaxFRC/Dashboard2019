@@ -217,7 +217,48 @@ namespace Dashboard
 
                         }
 
-                        
+                        if (((string)Bundle.Messages[0].Arguments[0]).Equals("ControllerDataBundle"))
+                        {
+
+                            // Iterate through all the messages and save controller data.
+                            foreach (OscMessage Message in Bundle.Messages)
+                            {
+
+                                switch(Message.Address)
+                                {
+
+                                    case "/BundleIdentifier":
+                                        break;
+
+                                    case "/DriverController/Buttons":
+                                        
+                                        foreach(int ButtonState in Message.Arguments)
+                                        {
+                                            
+                                        }
+                                        break;
+
+                                    case "/DriverController/Axis":
+                                        foreach (double AxisValue in Message.Arguments)
+                                        {
+
+                                        }
+                                        break;
+
+                                    case "/OperatorController/Buttons":
+                                         foreach(int ButtonState in Message.Arguments)
+                                         {
+                                            
+                                         }
+                                        break;
+
+                                    default:
+                                        break;
+
+                                }
+                            }
+
+                        }
 
                     }
 
