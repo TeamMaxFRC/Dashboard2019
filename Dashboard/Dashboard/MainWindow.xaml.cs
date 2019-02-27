@@ -429,17 +429,17 @@ namespace Dashboard
             try
             {
                 List<Process> processes = Process.GetProcessesByName("ElgatoStreamDeckController").ToList();
-                if (Init || processes.Count() > 1)
+                if (Init || processes.Count() > 1) // If this is the first run or there are more than one instances running
                 {
                     foreach (Process process in processes)
                     {
-                        process.Kill();
+                        process.Kill(); // Kill all instances
                     }
-                    Process.Start(@"ElgatoStreamDeckController.exe");
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // Then restart.
                 }
                 else if (processes.Count() < 1)
                 {
-                    Process.Start(@"ElgatoStreamDeckController.exe");
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // If there are no instances running, start one.
                 }
             }
             catch
