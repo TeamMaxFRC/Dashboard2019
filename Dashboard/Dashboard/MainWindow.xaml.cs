@@ -8,9 +8,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Linq;
-using System.Drawing;
-using System.Net;
-using System.Net.NetworkInformation;
 
 namespace Dashboard
 {
@@ -66,33 +63,33 @@ namespace Dashboard
         public Rect DriverStationRect;
 
         // Background worker which will receive the OSC data.
-        private BackgroundWorker UpdateWorker = new BackgroundWorker();
+        private BackgroundWorker StreamdeckWorker = new BackgroundWorker();
         private BackgroundWorker LimelightWorker = new BackgroundWorker();
+        private BackgroundWorker UpdateWorker = new BackgroundWorker();
 
         // Create the OSC receiver.
         private static UDPListener Receiver;
-
-        // Create the stream deck controller process.
-        Process StreamDeckController;
 
         public MainWindow()
         {
             InitializeComponent();
             LoadDriverStation();
 
+            // Start the stream deck control.
+            ManageStreamDeckProcesses(true);
+
             // Connect the receiver to the proper port.
             Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
-            UpdateWorker.DoWork += Update;
+            StreamdeckWorker.DoWork += StreamdeckUpdate;
             LimelightWorker.DoWork += LimelightUpdate;
+            UpdateWorker.DoWork += Update;
 
             // Have the update worker run in its own thread.
-            UpdateWorker.RunWorkerAsync();
+            StreamdeckWorker.RunWorkerAsync();
             LimelightWorker.RunWorkerAsync();
-
-            // Start the stream deck control.
-            StreamDeckController = Process.Start(@"ElgatoStreamDeckController.exe");
+            UpdateWorker.RunWorkerAsync();
 
             // Set the dashboard to the top left corner of the screen.
             MainDashboard.Left = 0;
@@ -107,6 +104,15 @@ namespace Dashboard
             if (DriverStation != IntPtr.Zero)
             {
                 MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
+            }
+        }
+
+        public void StreamdeckUpdate(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Thread.Sleep(5000);
+                ManageStreamDeckProcesses(false);
             }
         }
 
@@ -418,13 +424,34 @@ namespace Dashboard
             }
         }
 
+        private void ManageStreamDeckProcesses(bool Init)
+        {
+            try
+            {
+                List<Process> processes = Process.GetProcessesByName("ElgatoStreamDeckController").ToList();
+                if (Init || processes.Count() > 1)
+                {
+                    foreach (Process process in processes)
+                    {
+                        process.Kill();
+                    }
+                    Process.Start(@"ElgatoStreamDeckController.exe");
+                }
+                else if (processes.Count() < 1)
+                {
+                    Process.Start(@"ElgatoStreamDeckController.exe");
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
             // Close the OSC receiver.
             Receiver.Close();
-
-            // Close the vJoy controller application.
-            StreamDeckController.Kill();
         }
 
         // Import functions from user32.dll
@@ -497,24 +524,6 @@ namespace Dashboard
             {
                 return GetWindowText(Window).Contains(TitleText);
             });
-        }
-
-        private bool PingLimelight()
-        {
-            try
-            {
-                Ping ping = new Ping();
-                PingReply pingresult = ping.Send("limelight.local");
-                if (pingresult.Status.ToString() == "Success")
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-
-            }
-            return false;
         }
     }
 }
