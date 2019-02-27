@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" Width="238.911" Height="240.602">
-    <Grid Background="LightBlue">
+    <Grid Background="Navy">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>

@@ -4,35 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
-             mc:Ignorable="d" Height="186" Width="236">
-    <Grid Background="ForestGreen">
+             mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="300">
+
+    <Grid Background="LightBlue">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Ellipse Name="Light1" Fill="Tomato" Height="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Grid.Column="2"/>
+        <!-- Error Widget Display -->
+        <TextBlock FontStyle="Oblique" FontSize="30" Text="ERRORS" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
 
-        <Ellipse Name="Light2" Fill="Tomato" Height="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Grid.Column="0" />
+        <Ellipse Name="Light1" Fill="Tomato" Height="20" Width="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
 
-        <ListBox Name="ErrorBox" ItemsSource="{Binding}" Margin="10" Grid.Row="1" Grid.ColumnSpan="3" RenderTransformOrigin="0.5,0.5">
-            <ListBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.054"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ListBox.RenderTransform>
-        </ListBox>
+        <Ellipse Name="Light2" Fill="Tomato" Height="20" Width="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
 
-        <TextBlock FontStyle="Oblique" FontSize="30" Text="ERROR" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox Name="ErrorBox" ItemsSource="{Binding}" Margin="10" Grid.Row="1" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="2"/>
 
     </Grid>
+    
 </UserControl>

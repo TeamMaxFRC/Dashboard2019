@@ -1,6 +1,7 @@
 ﻿using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 using System;
+using System.Drawing;
 using System.Threading;
 using vJoyInterfaceWrap;
 
@@ -57,10 +58,17 @@ namespace ElgatoStreamDeckController
             Deck.KeyStateChanged += StreamDeckKeyPressed;
 
             // Send the bitmap information to the device.
-            Random Rand = new Random();
+            Bitmap FullImage = new Bitmap(@"StreamDeckImage.png");
+
             for (int i = 0; i < Deck.Keys.Count; i++)
             {
-                Deck.SetKeyBitmap(i, KeyBitmap.Create.FromRgb((byte)Rand.Next(0, 255), (byte)Rand.Next(0, 255), (byte)Rand.Next(0, 255)));
+                int Left = (i % 5) * (72 + 16);
+                int Top = (int)Math.Floor((double)i / 5) * (72 + 16);
+
+                Rectangle CropArea = new Rectangle(Left, Top, 72, 72);
+                Bitmap CroppedImage = FullImage.Clone(CropArea, FullImage.PixelFormat);
+
+                Deck.SetKeyBitmap(i, KeyBitmap.Create.FromBitmap(CroppedImage));
             }
 
             // Infinitely loop, that way we can constantly receive key presses.
@@ -71,5 +79,13 @@ namespace ElgatoStreamDeckController
             }
 
         }
+
+        // Returns the path of the program executable.
+        public string GetPath()
+        {
+            string Folder = Environment.CurrentDirectory;
+            return Folder;
+        }
+
     }
 }

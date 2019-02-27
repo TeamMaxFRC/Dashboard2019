@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using MjpegProcessor;
+using System.Threading;
 
 namespace Dashboard
 {
@@ -14,6 +15,7 @@ namespace Dashboard
     {
         readonly MjpegDecoder _mjpeg;
         Uri StreamAddress = new Uri("http://limelight.local:5800");
+        //public bool CurrentlyStreaming = false;
         public Limelight()
         {
             InitializeComponent();
@@ -22,8 +24,9 @@ namespace Dashboard
             _mjpeg.Error += _mjpeg_Error;
         }
 
-        public void InitStream()
+        public void StartStream()
         {
+            //CurrentlyStreaming = true;
             _mjpeg.ParseStream(StreamAddress);
         }
 
@@ -35,7 +38,8 @@ namespace Dashboard
         void _mjpeg_Error(object sender, ErrorEventArgs e)
         {
             _mjpeg.StopStream();
-            _mjpeg.ParseStream(StreamAddress);
+            Thread.Sleep(5000);
+            StartStream();
         }
 
         public void UpdateX(double X)

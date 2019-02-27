@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Linq;
-using System.Drawing;
 
 namespace Dashboard
 {
@@ -64,6 +63,8 @@ namespace Dashboard
         public Rect DriverStationRect;
 
         // Background worker which will receive the OSC data.
+        private BackgroundWorker StreamdeckWorker = new BackgroundWorker();
+        private BackgroundWorker LimelightWorker = new BackgroundWorker();
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
 
         // Create the OSC receiver.
@@ -74,13 +75,20 @@ namespace Dashboard
             InitializeComponent();
             LoadDriverStation();
 
+            // Start the stream deck control.
+            ManageStreamDeckProcesses(true);
+
             // Connect the receiver to the proper port.
             Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
+            StreamdeckWorker.DoWork += StreamdeckUpdate;
+            LimelightWorker.DoWork += LimelightUpdate;
             UpdateWorker.DoWork += Update;
 
             // Have the update worker run in its own thread.
+            StreamdeckWorker.RunWorkerAsync();
+            LimelightWorker.RunWorkerAsync();
             UpdateWorker.RunWorkerAsync();
 
             // Set the dashboard to the top left corner of the screen.
@@ -89,7 +97,7 @@ namespace Dashboard
             MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
             // Find the driver station after waiting for it.
-            Thread.Sleep(1500);
+            Thread.Sleep(3000);
 
             DriverStation = FindDriverStation();
 
@@ -99,10 +107,22 @@ namespace Dashboard
             }
         }
 
+        public void StreamdeckUpdate(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Thread.Sleep(5000);
+                ManageStreamDeckProcesses(false);
+            }
+        }
+
+        public void LimelightUpdate(object sender, DoWorkEventArgs e)
+        {
+            LimelightWidget.StartStream();
+        }
+
         public void Update(object sender, DoWorkEventArgs e)
         {
-            //LimelightWidget.InitStream();
-
             // Receive loop from Sharp OSC.
             while (true)
             {
@@ -125,24 +145,24 @@ namespace Dashboard
                         // Get the next message. This receive will not block.
                         OscMessage ReceivedMessage = (OscMessage)Packet;
 
-                        // Show any recieved Limelight values.
+                        // Show any received Limelight values.
                         if (ReceivedMessage.Address.Equals("/Robot/Limelight/X"))
                         {
-                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateX((double)ReceivedMessage.Arguments[0])));
                         }
                         if (ReceivedMessage.Address.Equals("/Robot/Limelight/Y"))
                         {
-                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateY((double)ReceivedMessage.Arguments[0])));
                         }
                         if (ReceivedMessage.Address.Equals("/Robot/Limelight/A"))
                         {
-                            //Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => LimelightWidget.UpdateA((double)ReceivedMessage.Arguments[0])));
                         }
 
-                        // Show any received motor values.
+                        // Show any received Console values.
                         if (ReceivedMessage.Address.Equals("/Robot/Console/Text"))
                         {
-                            // Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((String)ReceivedMessage.Arguments[0])));
+                            Application.Current.Dispatcher.InvokeAsync(new Action(() => ConsoleBox.PrintLine((string)ReceivedMessage.Arguments[0])));
                         }
 
                     }
@@ -198,6 +218,23 @@ namespace Dashboard
 
                         }
 
+                        // If the bundle ID is "SensorInputBundle" then send the data to the current widget.
+                        if (((string)Bundle.Messages[0].Arguments[0]).Equals("SensorInputBundle"))
+                        {
+
+                            // Iterate through all the messages and generate the header and data rows.
+                            foreach (OscMessage Message in Bundle.Messages)
+                            {
+
+                                if (!Message.Address.Equals("/BundleIdentifier"))
+                                {
+                                    Application.Current.Dispatcher.InvokeAsync(new Action(() => SensorInputWidget.SetSensorValue((double)Message.Arguments[0], Message.Address)));
+                                }
+
+                            }
+
+                        }
+
                         // If the bundle ID is "ErrorBundle" then send the data to the error reporter.
                         if (((string)Bundle.Messages[0].Arguments[0]).Equals("ErrorBundle"))
                         {
@@ -209,7 +246,14 @@ namespace Dashboard
                             {
                                 if (!Message.Address.Equals("/BundleIdentifier"))
                                 {
-                                    Errors.Add((string)Message.Arguments[0]);
+
+                                    foreach (int Argument in Message.Arguments)
+                                    {
+                                        if (Argument != -1)
+                                        {
+                                            Errors.Add(ConvertErrorAddress(Message.Address) + ConvertFault(Argument));
+                                        }
+                                    }
                                 }
                             }
 
@@ -224,17 +268,17 @@ namespace Dashboard
                             foreach (OscMessage Message in Bundle.Messages)
                             {
 
-                                switch(Message.Address)
+                                switch (Message.Address)
                                 {
 
                                     case "/BundleIdentifier":
                                         break;
 
                                     case "/DriverController/Buttons":
-                                        
-                                        foreach(int ButtonState in Message.Arguments)
+
+                                        foreach (int ButtonState in Message.Arguments)
                                         {
-                                            
+
                                         }
                                         break;
 
@@ -246,10 +290,10 @@ namespace Dashboard
                                         break;
 
                                     case "/OperatorController/Buttons":
-                                         foreach(int ButtonState in Message.Arguments)
-                                         {
-                                            
-                                         }
+                                        foreach (int ButtonState in Message.Arguments)
+                                        {
+
+                                        }
                                         break;
 
                                     default:
@@ -259,6 +303,8 @@ namespace Dashboard
                             }
 
                         }
+
+
 
                     }
 
@@ -271,6 +317,100 @@ namespace Dashboard
                 }
 
             }
+        }
+
+        // Convert the fault ID into a human readable string.
+        private string ConvertFault(int Id)
+        {
+
+            switch (Id)
+            {
+
+                case 0:
+                    return "Brownout";
+
+                case 1:
+                    return "Over Current";
+
+                case 2:
+                    return "Over Voltage";
+
+                case 3:
+                    return "Motor Fault";
+
+                case 4:
+                    return "Sensor Fault";
+
+                case 5:
+                    return "Stall";
+
+                case 6:
+                    return "EEPROMCRC";
+
+                case 7:
+                    return "CANTX";
+
+                case 8:
+                    return "CANRX";
+
+                case 9:
+                    return "Has Reset";
+
+                case 10:
+                    return "DRV Fault";
+
+                case 11:
+                    return "Other Fault!";
+
+                case 12:
+                    return "Soft Limit Fwd";
+
+                case 13:
+                    return "Soft Limit Rev";
+
+                case 14:
+                    return "Hard Limit Fwd";
+
+                case 15:
+                    return "Hard Limit Rev";
+
+                default:
+                    return "";
+
+            }
+
+        }
+
+        // Convert the fault ID into a human readable string.
+        private string ConvertErrorAddress(string Address)
+        {
+
+            switch (Address)
+            {
+
+                case "/LeftMasterFaults":
+                    return "Left Master Spark: ";
+
+                case "/RightMasterFaults":
+                    return "Right Master Spark: ";
+
+                case "/LeftSlavePrimaryFaults":
+                    return "Left Slave Primary Spark: ";
+
+                case "/RightSlavePrimaryFaults":
+                    return "Right Slave Primary Spark: ";
+
+                case "/LeftSlaveSecondaryFaults":
+                    return "Left Slave Secondary Spark: ";
+
+                case "/RightSlaveSecondaryFaults":
+                    return "Right Slave Secondary Spark: ";
+
+                default:
+                    return "";
+
+            }
+
         }
 
         // Loads the FRC driver station.
@@ -299,7 +439,7 @@ namespace Dashboard
 
                 if (PossibleWindows.Count != 0)
                 {
-                    
+
                     Rect Rectangle = new Rect();
 
                     foreach (IntPtr Window in PossibleWindows)
@@ -311,7 +451,7 @@ namespace Dashboard
                             DriverStationRect = Rectangle;
                             return Window;
                         }
-                        
+
                     }
 
                     return IntPtr.Zero;
@@ -329,8 +469,33 @@ namespace Dashboard
             }
         }
 
+        private void ManageStreamDeckProcesses(bool Init)
+        {
+            try
+            {
+                List<Process> processes = Process.GetProcessesByName("ElgatoStreamDeckController").ToList();
+                if (Init || processes.Count() > 1) // If this is the first run or there are more than one instances running
+                {
+                    foreach (Process process in processes)
+                    {
+                        process.Kill(); // Kill all instances
+                    }
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // Then restart.
+                }
+                else if (processes.Count() < 1)
+                {
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // If there are no instances running, start one.
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
+            // Close the OSC receiver.
             Receiver.Close();
         }
 
@@ -405,7 +570,5 @@ namespace Dashboard
                 return GetWindowText(Window).Contains(TitleText);
             });
         }
-
     }
-
 }
