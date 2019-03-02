@@ -27,7 +27,7 @@ namespace Dashboard
         public class Log
         {
             public string BundleIdentifier { get; set; }
-            public string ActiveFileName { get; set; }
+            public StreamWriter ActiveFile { get; set; }
             public DateTime LastTimeLogged { get; set; }
         }
 
@@ -60,15 +60,15 @@ namespace Dashboard
             // Boolean to check if the file must be initialized.
             bool InitializeFile = true;
 
-            // String to track the current file name.
-            string FileName = "";
+            // Variable to store the active file.
+            StreamWriter FileWriter = null;
 
             // Check if the bundle identifier exists in the list.
             foreach (Log LogFile in ActiveLogs)
             {
                 if (LogFile.BundleIdentifier == BundleIdentifier)
                 {
-                    FileName = LogFile.ActiveFileName;
+                    FileWriter = LogFile.ActiveFile;
                     LogFile.LastTimeLogged = DateTime.Now;
                     InitializeFile = false;
                     break;
@@ -80,33 +80,26 @@ namespace Dashboard
             {
 
                 // Create the new log file and add it to the active files.
-                Log NewLogFile = new Log() { BundleIdentifier = BundleIdentifier, ActiveFileName = BundleIdentifier + "-" + DateTime.Now.ToString("hh-mm-ss"), LastTimeLogged = DateTime.Now };
+                Log NewLogFile = new Log() { BundleIdentifier = BundleIdentifier, LastTimeLogged = DateTime.Now };
                 ActiveLogs.Add(NewLogFile);
 
-                // Store the new file name.
-                FileName = NewLogFile.ActiveFileName;
-
                 // Create a stream writer to append the header.
-                StreamWriter HeaderWriter = File.AppendText(ActiveDirectory + "/" + FileName + ".csv");
+                NewLogFile.ActiveFile = File.AppendText(ActiveDirectory + "/" + BundleIdentifier + "-" + DateTime.Now.ToString("hh-mm-ss") + ".csv");
 
+                // Store the active file in the local variable.
+                FileWriter = NewLogFile.ActiveFile;
+                
                 // Write the header to the file and close the stream writer.
-                HeaderWriter.WriteLine(HeaderLine);
-                HeaderWriter.Flush();
-                HeaderWriter.Close();
+                NewLogFile.ActiveFile.WriteLine(HeaderLine);
 
                 // Prevent anyone from changing the active directory.
                 SelectDirectoryButton.IsEnabled = true;
 
             }
 
-            // Create the stream writer for the CSV file.
-            StreamWriter DataWriter = File.AppendText(ActiveDirectory + "/" + FileName + ".csv");
-
             // Write the line to the file and close the stream writer.
-            DataWriter.WriteLine(DataLine);
-            DataWriter.Flush();
-            DataWriter.Close();
-
+            FileWriter.WriteLine(DataLine);
+            FileWriter.Flush();
         }
 
         // Removes any logs that haven't been updated for 5 seconds.
@@ -118,6 +111,7 @@ namespace Dashboard
             {
                 if (LogFile.LastTimeLogged.AddSeconds(5) < DateTime.Now)
                 {
+                    Application.Current.Dispatcher.InvokeAsync(new Action(() => LogFile.ActiveFile.Close()));
                     Application.Current.Dispatcher.InvokeAsync(new Action(() => ActiveLogs.Remove(LogFile)));
                     break;
                 }
