@@ -130,7 +130,13 @@ namespace Dashboard
                 try
                 {
 
-                    // Receive the packet, but skip if it's null.
+                    // If the receiver exists, then receive the packet. Skip if it's null.
+                    if (Receiver == null)
+                    {
+                        Thread.Sleep(1);
+                        continue;
+                    }
+
                     OscPacket Packet = Receiver.Receive();
 
                     if (Packet == null)
