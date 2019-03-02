@@ -63,7 +63,7 @@ namespace Dashboard
         public Rect DriverStationRect;
 
         // Background worker which will receive the OSC data.
-        private BackgroundWorker StreamdeckWorker = new BackgroundWorker();
+        private BackgroundWorker StreamDeckWorker = new BackgroundWorker();
         private BackgroundWorker LimelightWorker = new BackgroundWorker();
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
 
@@ -82,12 +82,12 @@ namespace Dashboard
             Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
-            StreamdeckWorker.DoWork += StreamdeckUpdate;
+            StreamDeckWorker.DoWork += StreamdeckUpdate;
             LimelightWorker.DoWork += LimelightUpdate;
             UpdateWorker.DoWork += Update;
 
             // Have the update worker run in its own thread.
-            StreamdeckWorker.RunWorkerAsync();
+            StreamDeckWorker.RunWorkerAsync();
             LimelightWorker.RunWorkerAsync();
             UpdateWorker.RunWorkerAsync();
 
@@ -495,6 +495,11 @@ namespace Dashboard
 
         private void MainDashboard_Closing(object sender, CancelEventArgs e)
         {
+            // Kill all the threads to prevent the program from crashing.
+            StreamDeckWorker.Dispose();
+            LimelightWorker.Dispose();
+            UpdateWorker.Dispose();
+
             // Close the OSC receiver.
             Receiver.Close();
         }
