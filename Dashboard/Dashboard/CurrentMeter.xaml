@@ -41,7 +41,7 @@
         <TextBlock x:Name="LiftValue" FontSize="12" Text="0A" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Four Bar Current -->
-        <ProgressBar x:Name="FourBar" Value="0" Minimum="0" Maximum="20" Margin="5" Grid.Row="3"/>
+        <ProgressBar x:Name="FourBar" Value="0" Minimum="0" Maximum="50" Margin="5" Grid.Row="3"/>
         <TextBlock x:Name="FourBarTitle" FontSize="12" Text="Four Bar Arm" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="FourBarMinimum" FontSize="12" Text="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
         <TextBlock x:Name="FourBarMaximum" FontSize="12" Text="20" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
