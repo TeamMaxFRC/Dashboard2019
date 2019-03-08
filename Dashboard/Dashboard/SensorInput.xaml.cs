@@ -22,19 +22,19 @@ namespace Dashboard
             {
 
                 case ("/LiftEncoderVelocity"):
-                    LiftEncoderVelocityText.Text = SensorValue.ToString();
+                    LiftEncoderVelocityText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/LiftEncoderPosition"):
-                    LiftEncoderPositionText.Text = SensorValue.ToString();
+                    LiftEncoderPositionText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/LeftEncoderVelocity"):
-                    LeftEncoderVelocityText.Text = SensorValue.ToString();
+                    LeftEncoderVelocityText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/RightEncoderVelocity"):
-                    RightEncoderVelocityText.Text = SensorValue.ToString();
+                    RightEncoderVelocityText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/MagneticGatherEncoder"):
@@ -43,11 +43,11 @@ namespace Dashboard
                     break;
 
                 case ("/FourBarEncoderRelativePosition"):
-                    FourBarEncoderRelativePositionText.Text = SensorValue.ToString();
+                    FourBarEncoderAbsoluteDegreeText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/FourBarEncoderAbsolutePosition"):
-                    FourBarEncoderAbsolutePositionText.Text = SensorValue.ToString();
+                    FourBarEncoderAbsolutePositionText.Text = SensorValue.ToString("0.##");
                     break;
 
                 default:
