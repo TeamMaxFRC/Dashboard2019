@@ -43,7 +43,7 @@ namespace Dashboard
                     break;
 
                 case ("/FourBarEncoderRelativePosition"):
-                    FourBarEncoderRelativePositionText.Text = SensorValue.ToString("0.##");
+                    FourBarEncoderAbsoluteDegreeText.Text = SensorValue.ToString("0.##");
                     break;
 
                 case ("/FourBarEncoderAbsolutePosition"):
