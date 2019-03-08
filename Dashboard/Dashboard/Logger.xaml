@@ -5,18 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="300">
+             d:DesignHeight="125" d:DesignWidth="300">
 
     <Grid Background="Gray">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,7 +25,7 @@
         <TextBlock x:Name="Title" Text="Data Logger" FontSize="32" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Active Logs Display -->
-        <ListBox x:Name="ActiveLogsListBox" ItemsSource="{Binding}" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="5" BorderBrush="Black" BorderThickness="2">
+        <ListBox x:Name="ActiveLogsListBox" ItemsSource="{Binding}" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Margin="5" BorderBrush="Black" BorderThickness="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding BundleIdentifier}"></TextBlock>
@@ -37,9 +34,9 @@
         </ListBox>
 
         <!-- Directory Navigation -->
-        <TextBlock x:Name="DirectoryText" Text="" FontSize="16" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button x:Name="SelectDirectoryButton" Content="Select Directory" Grid.Column="1" Grid.Row="6" Margin="5" Click="SelectDirectoryButton_Click"/>
-        <Button x:Name="OpenDirectoryButton" Content="Open Directory" Grid.Row="6" Margin="5" Click="OpenDirectoryButton_Click"/>
+        <TextBlock x:Name="DirectoryText" Text="" FontSize="16" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="SelectDirectoryButton" Content="Select Directory" Grid.Column="1" Grid.Row="3" Margin="5" Click="SelectDirectoryButton_Click"/>
+        <Button x:Name="OpenDirectoryButton" Content="Open Directory" Grid.Row="3" Margin="5" Click="OpenDirectoryButton_Click"/>
 
     </Grid>
 
