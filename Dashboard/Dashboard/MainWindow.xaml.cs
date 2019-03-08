@@ -82,7 +82,7 @@ namespace Dashboard
             Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
-            StreamDeckWorker.DoWork += StreamdeckUpdate;
+            StreamDeckWorker.DoWork += StreamDeckUpdate;
             LimelightWorker.DoWork += LimelightUpdate;
             UpdateWorker.DoWork += Update;
 
@@ -107,7 +107,7 @@ namespace Dashboard
             }
         }
 
-        public void StreamdeckUpdate(object sender, DoWorkEventArgs e)
+        public void StreamDeckUpdate(object sender, DoWorkEventArgs e)
         {
             while (true)
             {
