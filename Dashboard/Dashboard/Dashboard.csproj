@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigurationPannel.xaml.cs">
+      <DependentUpon>ConfigurationPannel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
     <Compile Include="Speedometer.xaml.cs">
       <DependentUpon>Speedometer.xaml</DependentUpon>
     </Compile>
+    <Page Include="ConfigurationPannel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Console.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

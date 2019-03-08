@@ -31,7 +31,7 @@
         <ListBox x:Name="ActiveLogsListBox" ItemsSource="{Binding}" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="5" BorderBrush="Black" BorderThickness="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding ActiveFileName}"></TextBlock>
+                    <TextBlock Text="{Binding BundleIdentifier}"></TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
