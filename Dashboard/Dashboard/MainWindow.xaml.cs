@@ -136,11 +136,8 @@ namespace Dashboard
                         Thread.Sleep(1);
                         continue;
                     }
-                    else
-                    {
-                        OscPacket Packet = Receiver.Receive();
 
-                    }
+                    OscPacket Packet = Receiver.Receive();
 
                     if (Packet == null)
                     {
