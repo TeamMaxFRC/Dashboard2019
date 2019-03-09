@@ -60,7 +60,6 @@ namespace Dashboard
     public partial class MainWindow : Window
     {
         public IntPtr DriverStation;
-        public Rect DriverStationRect;
 
         // Background worker which will receive the OSC data.
         private BackgroundWorker StreamDeckWorker = new BackgroundWorker();
@@ -97,14 +96,7 @@ namespace Dashboard
             MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
 
             // Find the driver station after waiting for it.
-            Thread.Sleep(3000);
-
-            DriverStation = FindDriverStation();
-
-            if (DriverStation != IntPtr.Zero)
-            {
-                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * DriverStationRect.Top;
-            }
+            DriverStation = ResizeDriverStation();
         }
 
         public void StreamDeckUpdate(object sender, DoWorkEventArgs e)
@@ -425,7 +417,10 @@ namespace Dashboard
 
             try
             {
-                Process.Start(@"C:\Program Files (x86)\FRC Driver Station\DriverStation.exe");
+                if (ResizeDriverStation() == IntPtr.Zero)
+                {
+                    Process.Start(@"C:\Program Files (x86)\FRC Driver Station\DriverStation.exe");
+                }
             }
             catch
             {
@@ -433,11 +428,11 @@ namespace Dashboard
             }
 
             // Find the driver station.
-            DriverStation = FindDriverStation();
+            DriverStation = ResizeDriverStation();
         }
 
         // Find the location of the driver station.
-        public IntPtr FindDriverStation()
+        public IntPtr ResizeDriverStation()
         {
             try
             {
@@ -454,7 +449,10 @@ namespace Dashboard
 
                         if (Rectangle.Left == 0 && Rectangle.Right >= SystemParameters.PrimaryScreenWidth - 1 && Rectangle.Top > SystemParameters.PrimaryScreenHeight * .5)
                         {
-                            DriverStationRect = Rectangle;
+                            if (DriverStation != IntPtr.Zero)
+                            {
+                                MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
+                            }
                             return Window;
                         }
 
