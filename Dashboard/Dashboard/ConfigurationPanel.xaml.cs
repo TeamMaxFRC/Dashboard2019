@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Dashboard
@@ -22,10 +23,5 @@ namespace Dashboard
         {
             
         }
-
-        // private void btnClose_Click(object sender, EventArgs e)
-        //  {
-        //    Dashboard.close();
-        //  }
     }
 }

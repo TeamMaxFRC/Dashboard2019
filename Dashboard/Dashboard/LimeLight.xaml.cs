@@ -14,7 +14,7 @@ namespace Dashboard
     public partial class Limelight : UserControl
     {
         readonly MjpegDecoder _mjpeg;
-        Uri StreamAddress = new Uri("http://limelight.local:5800");
+        Uri StreamAddress = new Uri("http://10.10.71.205:5800");
 
         Boolean Errored;
 
