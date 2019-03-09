@@ -110,7 +110,11 @@ namespace Dashboard
 
         public void LimelightUpdate(object sender, DoWorkEventArgs e)
         {
-            LimelightWidget.StartStream();
+            while (true)
+            {
+                LimelightWidget.CheckStream();
+                Thread.Sleep(3000);
+            }
         }
 
         public void Update(object sender, DoWorkEventArgs e)

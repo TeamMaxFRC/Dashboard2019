@@ -16,7 +16,7 @@ namespace Dashboard
         readonly MjpegDecoder _mjpeg;
         Uri StreamAddress = new Uri("http://10.10.71.205:5800");
 
-        Boolean Errored;
+        Boolean Errored = false;
 
         //public bool CurrentlyStreaming = false;
         public Limelight()
@@ -25,16 +25,17 @@ namespace Dashboard
             _mjpeg = new MjpegDecoder();
             _mjpeg.FrameReady += mjpeg_FrameReady;
             _mjpeg.Error += _mjpeg_Error;
+            _mjpeg.ParseStream(StreamAddress);
+            
         }
 
-        public void StartStream()
+        public void CheckStream()   
         {
             if(Errored)
             {
                 //CurrentlyStreaming = true;
                 Errored = false;
                 _mjpeg.ParseStream(StreamAddress);
-                Thread.Sleep(5000);
             }
         }
 
