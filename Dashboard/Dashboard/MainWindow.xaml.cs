@@ -477,7 +477,7 @@ namespace Dashboard
             }
         }
 
-        private void ManageStreamDeckProcesses(bool Init)
+        public void ManageStreamDeckProcesses(bool Init)
         {
             try
             {

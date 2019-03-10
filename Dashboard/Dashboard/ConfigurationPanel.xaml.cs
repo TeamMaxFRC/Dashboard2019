@@ -23,5 +23,10 @@ namespace Dashboard
         {
             
         }
+
+        private void StreamDeckButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
