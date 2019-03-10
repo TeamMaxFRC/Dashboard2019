@@ -64,5 +64,15 @@ namespace Dashboard
         {
             aDisplay.Text = "A: " + A.ToString();
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Errored)
+            {
+                _mjpeg.StopStream();
+            }
+            Errored = false;
+            _mjpeg.ParseStream(StreamAddress);
+        }
     }
 }
