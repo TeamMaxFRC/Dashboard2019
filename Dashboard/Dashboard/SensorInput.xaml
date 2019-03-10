@@ -16,12 +16,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -33,13 +27,13 @@
         <TextBlock Foreground="Black" Text="Sensor Input" FontSize="30" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Normal"/>
 
         <!-- Sensor Titles -->
-        <TextBlock Text="Lift Encoder Velocity" FontSize="12" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Lift Encoder Position" FontSize="12" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Left Encoder Velocity" FontSize="12" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Right Encoder Velocity" FontSize="12" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Magnetic Gather Encoder" FontSize="12" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Four Bar Encoder Absolute Degree" FontSize="12" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="Four Bar Encoder Absolute Position" FontSize="12" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock Text="Lift Encoder Velocity" FontSize="12" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Lift Encoder Position" FontSize="12" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Left Encoder Velocity" FontSize="12" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Right Encoder Velocity" FontSize="12" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Magnetic Gather Encoder" FontSize="12" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Four Bar Encoder Absolute Degree" FontSize="12" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <TextBlock Text="Four Bar Encoder Absolute Position" FontSize="12" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
         
 
         <!-- Sensor Values -->
