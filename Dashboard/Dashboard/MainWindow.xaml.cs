@@ -113,7 +113,7 @@ namespace Dashboard
             while (true)
             {
                 LimelightWidget.CheckStream();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
             }
         }
 
@@ -456,6 +456,7 @@ namespace Dashboard
                             if (DriverStation != IntPtr.Zero)
                             {
                                 MainDashboard.Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
+                                SetForegroundWindow(DriverStation);
                             }
                             return Window;
                         }
@@ -524,6 +525,9 @@ namespace Dashboard
 
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWindow, ref Rect Rectangle);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rect

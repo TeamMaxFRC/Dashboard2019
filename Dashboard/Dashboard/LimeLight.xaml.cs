@@ -26,7 +26,6 @@ namespace Dashboard
             _mjpeg.FrameReady += mjpeg_FrameReady;
             _mjpeg.Error += _mjpeg_Error;
             _mjpeg.ParseStream(StreamAddress);
-            
         }
 
         public void CheckStream()   
