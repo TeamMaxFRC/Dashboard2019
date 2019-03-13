@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using MjpegProcessor;
 using System.Threading;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Dashboard
 {
@@ -66,6 +68,7 @@ namespace Dashboard
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
+            MJpegView.Source = null;
             if (!Errored)
             {
                 _mjpeg.StopStream();
