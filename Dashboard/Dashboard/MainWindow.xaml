@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
-        Title="Max Dashboard" 
+        Title="MAX Dashboard" 
         Height="500" Width="1200" 
         x:Name="MainDashboard" 
-        Closing="MainDashboard_Closing" 
-        Icon="Images/Max.jpg"
+        Closing="MainDashboard_Closing"
         WindowStyle="None" WindowStartupLocation="Manual" 
         AllowsTransparency="True" ResizeMode="NoResize">
 
