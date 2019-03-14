@@ -137,7 +137,7 @@ namespace Dashboard
                         if (Rectangle.Left == 0 && Rectangle.Right >= SystemParameters.PrimaryScreenWidth - 1 && Rectangle.Top > SystemParameters.PrimaryScreenHeight * .5)
                         {
                             double Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
-                            if (Resize && Application.Current.MainWindow.Height != Height)
+                            if (Resize && (Application.Current.MainWindow.Height != Height || Application.Current.MainWindow.Width != SystemParameters.PrimaryScreenWidth))
                             {
                                 SetMaximizedMode(true);
                                 MainDashboard.Left = 0;
