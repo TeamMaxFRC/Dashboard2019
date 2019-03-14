@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Dashboard"
         mc:Ignorable="d"
         Title="MAX Dashboard" 
-        Height="480" Width="800" 
+        d:DesignHeight="680" d:DesignWidth="1920" 
         x:Name="MainDashboard" 
         Closing="MainDashboard_Closing"
         WindowStyle="None" WindowStartupLocation="Manual" 

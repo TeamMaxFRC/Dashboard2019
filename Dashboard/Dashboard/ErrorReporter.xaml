@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard"
-             mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="300">
+             mc:Ignorable="d" d:DesignHeight="330" d:DesignWidth="470">
 
     <Grid Background="LightBlue">
         
