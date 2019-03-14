@@ -5,6 +5,8 @@ using MjpegProcessor;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dashboard
 {
@@ -15,6 +17,7 @@ namespace Dashboard
 
     public partial class Limelight : UserControl
     {
+        //private BitmapImage connecting = new BitmapImage(new Uri("images/connect.jpg", UriKind.Relative));
         readonly MjpegDecoder _mjpeg;
         Uri StreamAddress = new Uri("http://10.10.71.205:5800");
 
@@ -24,6 +27,7 @@ namespace Dashboard
         public Limelight()
         {
             InitializeComponent();
+            //MJpegView.Source = connecting;
             _mjpeg = new MjpegDecoder();
             _mjpeg.FrameReady += mjpeg_FrameReady;
             _mjpeg.Error += _mjpeg_Error;

@@ -2,8 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Dashboard
 {
@@ -55,9 +61,12 @@ namespace Dashboard
 
     public partial class MainWindow : Window
     {
-        public IntPtr DriverStation;
+        public bool Maximized = false;
+        public bool DriverStationPresent = false;
+        public double ScreenConstant = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
 
         // Background worker which will receive the OSC data.
+        private BackgroundWorker DriverStationWorker = new BackgroundWorker();
         private BackgroundWorker StreamDeckWorker = new BackgroundWorker();
         private BackgroundWorker LimelightWorker = new BackgroundWorker();
         private BackgroundWorker UpdateWorker = new BackgroundWorker();
@@ -68,39 +77,128 @@ namespace Dashboard
         public MainWindow()
         {
             InitializeComponent();
-            ConfigurationPanel.LoadDriverStation();
+            LoadDriverStation();
 
             // Start the stream deck control.
-            ConfigurationPanel.ManageStreamDeckProcesses(true);
+            ManageStreamDeckProcesses(true);
 
             // Connect the receiver to the proper port.
             Receiver = new UDPListener(5803);
 
             // Link the update method to the background worker.
+            DriverStationWorker.DoWork += DriverStationUpdate;
             StreamDeckWorker.DoWork += StreamDeckUpdate;
             LimelightWorker.DoWork += LimelightUpdate;
             UpdateWorker.DoWork += Update;
 
             // Have the update worker run in its own thread.
+            DriverStationWorker.RunWorkerAsync();
             StreamDeckWorker.RunWorkerAsync();
             LimelightWorker.RunWorkerAsync();
             UpdateWorker.RunWorkerAsync();
+        }
 
-            // Set the dashboard to the top left corner of the screen.
-            MainDashboard.Left = 0;
-            MainDashboard.Top = 0;
-            MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
+        // Loads the FRC driver station.
+        public void LoadDriverStation()
+        {
 
-            // Find the driver station after waiting for it.
-            DriverStation = ConfigurationPanel.ResizeDriverStation();
+            try
+            {
+                if (!ManageDriverStation(false))
+                {
+                    Process.Start(@"C:\Program Files (x86)\FRC Driver Station\DriverStation.exe");
+                }
+            }
+            catch
+            {
+
+            }
+
+            // Find the driver station.
+            DriverStationPresent = ManageDriverStation(true);
+        }
+
+        // Find the location of the driver station.
+        public bool ManageDriverStation(bool Resize)
+        {
+            try
+            {
+                List<IntPtr> PossibleWindows = FindWindowsWithText("FRC Driver Station - ").ToList();
+
+                if (PossibleWindows.Count != 0)
+                {
+
+                    Rect Rectangle = new Rect();
+
+                    foreach (IntPtr Window in PossibleWindows)
+                    {
+                        GetWindowRect(Window, ref Rectangle);
+
+                        if (Rectangle.Left == 0 && Rectangle.Right >= SystemParameters.PrimaryScreenWidth - 1 && Rectangle.Top > SystemParameters.PrimaryScreenHeight * .5)
+                        {
+                            double Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
+                            if (Resize && Application.Current.MainWindow.Height != Height)
+                            {
+                                SetMaximizedMode(true);
+                                MainDashboard.Left = 0;
+                                MainDashboard.Top = 0;
+                                MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
+                                Application.Current.MainWindow.Height = Height;
+                                SetForegroundWindow(Window);
+                            }
+                            return true;
+                        }
+
+                    }
+
+                    SetMaximizedMode(false);
+                    return false;
+
+                }
+                else
+                {
+                    SetMaximizedMode(false);
+                    return false;
+                }
+
+            }
+            catch
+            {
+                SetMaximizedMode(false);
+                return false;
+            }
+        }
+
+        public void SetMaximizedMode(bool Set)
+        {
+            Maximized = Set;
+            if (Maximized)
+            {
+                TitleBar.Cursor = Cursors.Arrow;
+                MainDashboard.ResizeMode = ResizeMode.CanMinimize;
+            }
+            else
+            {
+                TitleBar.Cursor = Cursors.SizeAll;
+                MainDashboard.ResizeMode = ResizeMode.CanResizeWithGrip;
+            }
+        }
+
+        public void DriverStationUpdate(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Application.Current.Dispatcher.InvokeAsync(new Action(() => DriverStationPresent = ManageDriverStation(true)));
+                Thread.Sleep(5000);
+            }
         }
 
         public void StreamDeckUpdate(object sender, DoWorkEventArgs e)
         {
             while (true)
             {
-                Thread.Sleep(5000);
-                ConfigurationPanel.ManageStreamDeckProcesses(false);
+                Thread.Sleep(2000);
+                ManageStreamDeckProcesses(false);
             }
         }
 
@@ -317,6 +415,24 @@ namespace Dashboard
             }
         }
 
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close(); // Stop the program when the exit button is clicked.
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized; // Minimize the program when the minimize button is clicked.
+        }
+
+        private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!Maximized)
+            {
+                DragMove(); // Let the user move the window if not in snapped mode.
+            }
+        }
+
         // Convert the fault ID into a human readable string.
         private string ConvertFault(int Id)
         {
@@ -420,6 +536,131 @@ namespace Dashboard
 
             // Close the OSC receiver.
             Receiver.Close();
+        }
+
+        public void ManageStreamDeckProcesses(bool Init)
+        {
+            try
+            {
+                List<Process> processes = Process.GetProcessesByName("ElgatoStreamDeckController").ToList();
+                if (Init || processes.Count() > 1) // If this is the first run or there are more than one instances running
+                {
+                    foreach (Process process in processes)
+                    {
+                        process.Kill(); // Kill all instances
+                    }
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // Then restart.
+                }
+                else if (processes.Count() < 1)
+                {
+                    Process.Start(@"ElgatoStreamDeckController.exe"); // If there are no instances running, start one.
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        // Import functions from user32.dll
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowText(IntPtr hWindow, StringBuilder StrText, int MaxCount);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLength(IntPtr hWindow);
+
+        [DllImport("user32.dll")]
+        private static extern bool EnumWindows(EnumWindowsProc EnumProc, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWindow, ref Rect Rectangle);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rect
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        // Code for detecting the current position of different windows
+        public delegate bool EnumWindowsProc(IntPtr hWindow, IntPtr lParam);
+
+        /// <summary> Get the text for the window pointed to by hWnd </summary>
+        public static string GetWindowText(IntPtr hWindow)
+        {
+            int Size = GetWindowTextLength(hWindow);
+
+            if (Size > 0)
+            {
+                var Builder = new StringBuilder(Size + 1);
+                GetWindowText(hWindow, Builder, Builder.Capacity);
+                return Builder.ToString();
+            }
+
+            return String.Empty;
+        }
+        /// <summary> Find all windows that match the given filter </summary>
+        /// <param name="Filter"> A delegate that returns true for windows
+        ///    that should be returned and false for windows that should
+        ///    not be returned </param>
+        public static IEnumerable<IntPtr> FindWindows(EnumWindowsProc Filter)
+        {
+            List<IntPtr> Windows = new List<IntPtr>();
+
+            EnumWindows(delegate (IntPtr Window, IntPtr Param)
+            {
+                if (Filter(Window, Param))
+                {
+                    // Only add the windows that pass the filter.
+                    Windows.Add(Window);
+                }
+
+                // But return true here so that we iterate all windows.
+                return true;
+
+            }, IntPtr.Zero);
+
+            return Windows;
+        }
+        /// <summary> Find all windows that contain the given title text </summary>
+        /// <param name="TitleText"> The text that the window title must contain. </param>
+        public static IEnumerable<IntPtr> FindWindowsWithText(string TitleText)
+        {
+            return FindWindows(delegate (IntPtr Window, IntPtr Param)
+            {
+                return GetWindowText(Window).Contains(TitleText);
+            });
+        }
+
+        private void ResizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DriverStationPresent)
+            {
+                if (false)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                if (Maximized)
+                {
+                    SetMaximizedMode(false);
+                }
+                else
+                {
+                    SetMaximizedMode(true);
+                }
+            }
         }
     }
 }

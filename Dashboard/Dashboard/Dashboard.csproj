@@ -73,9 +73,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfigurationPanel.xaml.cs">
-      <DependentUpon>ConfigurationPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>
     </Compile>
@@ -97,10 +94,6 @@
     <Compile Include="Speedometer.xaml.cs">
       <DependentUpon>Speedometer.xaml</DependentUpon>
     </Compile>
-    <Page Include="ConfigurationPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Console.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -184,19 +177,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\background.jpg" />
+    <Resource Include="images\background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\LimeLightLogo.jpg" />
+    <Resource Include="images\LimeLightLogo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Max.jpg" />
+    <Resource Include="images\Max.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\refresh.png" />
+    <Resource Include="images\refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Dashboard Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\connect.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\resize.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

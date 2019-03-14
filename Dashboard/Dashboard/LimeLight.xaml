@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Dashboard"
       mc:Ignorable="d" 
+      Background="Gray"
       d:DesignHeight="250" d:DesignWidth="300">
 
     <Grid>
@@ -18,13 +19,13 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" Fill="Gray" />
-        <TextBlock x:Name="ConnectionStatus" Text="Trying to connect..." FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox x:Name="xDisplay" Margin="5" Grid.Row="2" Grid.Column="0" IsEnabled="False" Text="X:"/>
-        <TextBox x:Name="yDisplay" Margin="5" Grid.Row="2" Grid.Column="1" IsEnabled="False" Text="Y:"/>
-        <TextBox x:Name="aDisplay" Margin="5" Grid.Row="2" Grid.Column="2" IsEnabled="False" Text="A:" />
+        <TextBlock x:Name="ConnectionStatus" Text="Trying to connect..." FontSize="20" FontWeight="Bold" Foreground="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Center" VerticalAlignment="Center"/>
+        <Rectangle x:Name="Status" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="AliceBlue" RadiusX="15" RadiusY="15" Margin="5"/>
+        <TextBox x:Name="xDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="X:" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="yDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="Y:" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="aDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" IsReadOnly="True" Text="A:" Background="{x:Null}" BorderBrush="{x:Null}"/>
         <Button x:Name="Refresh" Grid.Column="3" Grid.Row="2" Margin="5" Click="Refresh_Click">
-            <Image Source="Images/refresh.png"/>
+            <Image Source="images/refresh.png"/>
         </Button>
         <Image x:Name="MJpegView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="5"/>
     </Grid>
