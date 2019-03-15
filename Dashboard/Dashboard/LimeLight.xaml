@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Dashboard"
-      mc:Ignorable="d" 
-      Background="Gray"
+      mc:Ignorable="d"
       d:DesignHeight="250" d:DesignWidth="300">
 
     <Grid>
@@ -14,20 +13,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="ConnectionStatus" Text="Trying to connect..." FontSize="20" FontWeight="Bold" Foreground="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Center" VerticalAlignment="Center"/>
-        <Rectangle x:Name="Status" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="AliceBlue" RadiusX="15" RadiusY="15" Margin="5"/>
-        <TextBox x:Name="xDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="X:" Background="{x:Null}" BorderBrush="{x:Null}"/>
-        <TextBox x:Name="yDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="Y:" Background="{x:Null}" BorderBrush="{x:Null}"/>
-        <TextBox x:Name="aDisplay" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" IsReadOnly="True" Text="A:" Background="{x:Null}" BorderBrush="{x:Null}"/>
-        <Button x:Name="Refresh" Grid.Column="3" Grid.Row="2" Margin="5" Click="Refresh_Click">
-            <Image Source="images/refresh.png"/>
-        </Button>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" BorderThickness="5" BorderBrush="Black" Background="#023459"/>
+        <TextBox x:Name="xDisplay" Foreground="#B2A59F" Margin="10,7,7,7" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" IsReadOnly="True" Text="X:" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="yDisplay" Foreground="#B2A59F" Margin="10,7,7,7" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Text="Y:" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="aDisplay" Foreground="#B2A59F" Margin="10,7,7,7" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" IsReadOnly="True" Text="A:" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Button x:Name="Refresh" Grid.Column="3" Grid.Row="2" Margin="10" Click="Refresh_Click" Content="Refresh"/>
         <Image x:Name="MJpegView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="5"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" BorderThickness="5" BorderBrush="Black"/>
     </Grid>
 
 </UserControl>
