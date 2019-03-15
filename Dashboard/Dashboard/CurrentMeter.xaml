@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="330" d:DesignWidth="470">
 
-    <Grid Background="RoyalBlue">
+    <Grid Background="#023459">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="CurrentWidgetTitle" Text="Current Meters" FontSize="32" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="CurrentWidgetTitle" Text="Current Meters" FontSize="32" Grid.ColumnSpan="3" Foreground="#B2A59F" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Drive Current -->
         <ProgressBar x:Name="Drive" Value="0" Minimum="0" Maximum="200" Margin="5" Grid.Row="1"/>

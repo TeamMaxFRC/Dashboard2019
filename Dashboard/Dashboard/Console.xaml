@@ -6,14 +6,14 @@
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" d:DesignHeight="330" d:DesignWidth="470">
 
-    <Grid Background="DarkGray">
+    <Grid Background="DarkSlateGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="TitleBox" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Console" Grid.Row="0"/>
+        <TextBlock x:Name="TitleBox" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Console" Grid.Row="0" Foreground="#B2A59F"/>
         <TextBox x:Name="ConsoleBox" BorderThickness="2" BorderBrush="Black" Margin="10" Grid.Row="1" Text="" TextChanged="ConsoleBox_TextChanged" IsEnabled="False"/>
         <Button x:Name="ConsoleClear" Content="Clear Console" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="ConsoleClear_Click"/>
 

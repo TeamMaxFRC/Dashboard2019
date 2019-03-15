@@ -203,5 +203,11 @@
   <ItemGroup>
     <Resource Include="images\resize.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\newbackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\turquoisespace.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

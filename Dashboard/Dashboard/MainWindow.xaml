@@ -29,7 +29,12 @@
         <ContentControl Content="{Binding CurrentPage}" />
 
         <Grid>
-            <Grid.RowDefinitions>
+
+                <Grid.Background>
+                    <ImageBrush ImageSource="images/turquoisespace.jpg" Stretch="UniformToFill"/>
+                </Grid.Background>
+
+                <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Dashboard"
              mc:Ignorable="d" d:DesignHeight="330" d:DesignWidth="470">
 
-    <Grid Background="LightBlue">
+    <Grid Background="#1E646E">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Error Widget Display -->
-        <TextBlock FontStyle="Oblique" FontSize="30" Text="ERRORS" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+        <TextBlock FontStyle="Oblique" FontSize="30" Text="ERRORS" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#B2A59F" Grid.Column="1"/>
 
         <Ellipse Name="Light1" Fill="Tomato" Height="20" Width="20" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
 

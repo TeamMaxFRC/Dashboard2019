@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="245" d:DesignWidth="470">
 
-    <Grid Background="Gray">
+    <Grid Background="DarkSlateGray">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Logger Title -->
-        <TextBlock x:Name="Title" Text="Data Logger" FontSize="32" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="Title" Text="Data Logger" FontSize="32" Grid.ColumnSpan="2" Foreground="#B2A59F" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Active Logs Display -->
         <ListBox x:Name="ActiveLogsListBox" ItemsSource="{Binding}" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Margin="5" BorderBrush="Black" BorderThickness="2">
