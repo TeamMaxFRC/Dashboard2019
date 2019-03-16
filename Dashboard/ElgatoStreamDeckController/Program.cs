@@ -1,6 +1,7 @@
 ﻿using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using vJoyInterfaceWrap;
@@ -15,6 +16,7 @@ namespace ElgatoStreamDeckController
         static public vJoy VirtualJoystick = new vJoy();
         static public vJoy.JoystickState VirtualJoystickState = new vJoy.JoystickState();
         static public uint Id = 1;
+        static public List<Bitmap> buttonBitmaps = new List<Bitmap>();
 
         // Handles stream deck key presses.
         static void StreamDeckKeyPressed(object Sender, KeyEventArgs EventArgs)
@@ -66,15 +68,19 @@ namespace ElgatoStreamDeckController
                 int Top = (int)Math.Floor((double)i / 5) * (72 + 16);
 
                 Rectangle CropArea = new Rectangle(Left, Top, 72, 72);
-                Bitmap CroppedImage = FullImage.Clone(CropArea, FullImage.PixelFormat);
-
-                Deck.SetKeyBitmap(i, KeyBitmap.Create.FromBitmap(CroppedImage));
+                buttonBitmaps.Add(FullImage.Clone(CropArea, FullImage.PixelFormat));
             }
 
             // Infinitely loop, that way we can constantly receive key presses.
             while (true)
             {
                 // TODO: Send OSC heartbeat message here.
+                byte i = 0;
+                foreach (Bitmap bitmap in buttonBitmaps)
+                {
+                    Deck.SetKeyBitmap(i, KeyBitmap.Create.FromBitmap(bitmap));
+                    i++;
+                }
                 Thread.Sleep(1000);
             }
 
