@@ -209,8 +209,5 @@
   <ItemGroup>
     <Resource Include="images\turquoisespace.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\starfield.gif" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
