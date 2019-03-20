@@ -9,11 +9,11 @@
         d:DesignHeight="680" d:DesignWidth="1920" 
         x:Name="MainDashboard" 
         Closing="MainDashboard_Closing"
-        WindowStyle="None" WindowStartupLocation="Manual" 
-        ResizeMode="CanResizeWithGrip" Background="#36393f">
+        WindowStyle="SingleBorderWindow" WindowStartupLocation="Manual" 
+        ResizeMode="CanResize" Background="#36393f">
 
     <DockPanel x:Name="RootWindow">
-        <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#202225" MaxHeight="24" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
+        <DockPanel x:Name="TitleBar" Height="0" DockPanel.Dock="Top" Background="#202225" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="10,2,2,2">MAX Dashboard</TextBlock>
             <Button x:Name="ExitButton" Click="ExitButton_Click" DockPanel.Dock="Right" Background="#00000000" Cursor="Arrow" ToolTip="Close">
                 <Image Source="images/exit.png"/>

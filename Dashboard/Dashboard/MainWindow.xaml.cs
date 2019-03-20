@@ -61,7 +61,7 @@ namespace Dashboard
 
     public partial class MainWindow : Window
     {
-        public bool Maximized = false;
+        public bool Snapped = false;
         public bool DriverStationPresent = false;
         public double ScreenConstant = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
 
@@ -139,7 +139,7 @@ namespace Dashboard
                             double Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
                             if (Resize && (Application.Current.MainWindow.Height != Height || Application.Current.MainWindow.Width != SystemParameters.PrimaryScreenWidth))
                             {
-                                SetMaximizedMode(true);
+                                SetSnappedMode(true);
                                 MainDashboard.Left = 0;
                                 MainDashboard.Top = 0;
                                 MainDashboard.Width = SystemParameters.PrimaryScreenWidth;
@@ -151,37 +151,39 @@ namespace Dashboard
 
                     }
 
-                    SetMaximizedMode(false);
+                    SetSnappedMode(false);
                     return false;
 
                 }
                 else
                 {
-                    SetMaximizedMode(false);
+                    SetSnappedMode(false);
                     return false;
                 }
 
             }
             catch
             {
-                SetMaximizedMode(false);
+                SetSnappedMode(false);
                 return false;
             }
         }
 
-        public void SetMaximizedMode(bool Set)
+        public void SetSnappedMode(bool Set)
         {
-            Maximized = Set;
-            if (Maximized)
+            if (!Snapped && Set) // Snapped mode.
             {
-                TitleBar.Cursor = Cursors.Arrow;
                 MainDashboard.ResizeMode = ResizeMode.CanMinimize;
+                TitleBar.Height = 24;
+                Application.Current.MainWindow.WindowStyle = WindowStyle.None;
             }
-            else
+            else if (Snapped && !Set) // Normal mode.
             {
-                TitleBar.Cursor = Cursors.SizeAll;
-                MainDashboard.ResizeMode = ResizeMode.CanResizeWithGrip;
+                MainDashboard.ResizeMode = ResizeMode.CanResize;
+                TitleBar.Height = 0;
+                Application.Current.MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
             }
+            Snapped = Set;
         }
 
         public void DriverStationUpdate(object sender, DoWorkEventArgs e)
@@ -427,7 +429,7 @@ namespace Dashboard
 
         private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!Maximized)
+            if (!Snapped)
             {
                 DragMove(); // Let the user move the window if not in snapped mode.
             }
@@ -652,13 +654,13 @@ namespace Dashboard
             }
             else
             {
-                if (Maximized)
+                if (Snapped)
                 {
-                    SetMaximizedMode(false);
+                    SetSnappedMode(false);
                 }
                 else
                 {
-                    SetMaximizedMode(true);
+                    SetSnappedMode(true);
                 }
             }
         }
