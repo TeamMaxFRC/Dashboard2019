@@ -73,10 +73,7 @@ namespace Dashboard
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             MJpegView.Source = null;
-            if (!Errored)
-            {
-                _mjpeg.StopStream();
-            }
+            _mjpeg.StopStream();
             Errored = false;
             _mjpeg.ParseStream(StreamAddress);
         }

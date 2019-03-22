@@ -61,7 +61,7 @@ namespace Dashboard
 
     public partial class MainWindow : Window
     {
-        public bool Snapped = false;
+        public bool Snapped = false, SnappedSearch = true;
         public bool DriverStationPresent = false;
         public double ScreenConstant = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
 
@@ -136,8 +136,8 @@ namespace Dashboard
 
                         if (Rectangle.Left == 0 && Rectangle.Right >= SystemParameters.PrimaryScreenWidth - 1 && Rectangle.Top > SystemParameters.PrimaryScreenHeight * .5)
                         {
-                            double Height = SystemParameters.WorkArea.Height / System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height * Rectangle.Top;
-                            if (Resize && (Application.Current.MainWindow.Height != Height || Application.Current.MainWindow.Width != SystemParameters.PrimaryScreenWidth))
+                            double Height = ScreenConstant * Rectangle.Top;
+                            if (Resize && SnappedSearch && (Application.Current.MainWindow.Height != Height || Application.Current.MainWindow.Width != SystemParameters.PrimaryScreenWidth))
                             {
                                 SetSnappedMode(true);
                                 MainDashboard.Left = 0;
@@ -152,12 +152,14 @@ namespace Dashboard
                     }
 
                     SetSnappedMode(false);
+                    SnappedSearch = true;
                     return false;
 
                 }
                 else
                 {
                     SetSnappedMode(false);
+                    SnappedSearch = true;
                     return false;
                 }
 
@@ -165,6 +167,7 @@ namespace Dashboard
             catch
             {
                 SetSnappedMode(false);
+                SnappedSearch = true;
                 return false;
             }
         }
@@ -641,28 +644,7 @@ namespace Dashboard
 
         private void ResizeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DriverStationPresent)
-            {
-                if (false)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                if (Snapped)
-                {
-                    SetSnappedMode(false);
-                }
-                else
-                {
-                    SetSnappedMode(true);
-                }
-            }
+            
         }
     }
 }
