@@ -19,7 +19,7 @@ namespace Dashboard
     {
         //private BitmapImage connecting = new BitmapImage(new Uri("images/connect.jpg", UriKind.Relative));
         readonly MjpegDecoder _mjpeg;
-        Uri StreamAddress = new Uri("http://10.10.71.205:5800");
+        Uri StreamAddress = new Uri("http://10.10.71.11:5800");
 
         Boolean Errored = false;
 
